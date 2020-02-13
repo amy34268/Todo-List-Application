@@ -18,7 +18,7 @@ public class ToDoListApp {
     }
 
     //MODIFIES: this
-    //EFFECTS: processes user input
+    //EFFECTS: processes user input and initialize a to-do list
     private void runToDoList() {
         toDoList = new ToDoList();
         boolean keepGoing = true;
