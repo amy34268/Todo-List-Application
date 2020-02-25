@@ -19,3 +19,5 @@ keep me updated of school work.I am interested to learn the logic of how such an
 - *As a user, I want to be add a date to a task in the to-do list*
 - *As a user, I want to be add a label to a task in the to-do list*
 - *As a user, I want to be able to view the list of tasks on my to-do list*
+- *As a user, I want to be able to save my to-do list to file*
+- *As a user, I want to be able to load my to-do list from file when the program starts*
