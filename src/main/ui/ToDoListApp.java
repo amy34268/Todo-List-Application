@@ -2,6 +2,8 @@ package ui;
 
 import model.Task;
 import model.ToDoList;
+import persistence.Reader;
+import persistence.Writer;
 
 import java.util.Iterator;
 import java.util.List;
@@ -9,6 +11,7 @@ import java.util.Scanner;
 
 //To-Do List application
 public class ToDoListApp {
+    private static final String TODOLISTS_FILE = "./data/todolists.txt";
     private ToDoList toDoList;
     private Scanner input;
 

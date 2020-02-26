@@ -1,6 +1,5 @@
 package persistence;
 
-
 import model.ToDoList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 class WriterTest {
-    private static final String TEST_FILE = "./data/testAccounts.txt";
+    private static final String TEST_FILE = "./data/myFile.txt";
     private Writer testWriter;
     private ToDoList todo;
 
@@ -24,15 +23,14 @@ class WriterTest {
     @BeforeEach
     void runBefore() throws FileNotFoundException, UnsupportedEncodingException {
         testWriter = new Writer(new File(TEST_FILE));
-        todo = new ToDoList("Mae", 123.56);
+        todo = new ToDoList();
 
     }
 
     @Test
     void testWriteAccounts() {
-        // save chequing and savings accounts to file
-        testWriter.write(chequing);
-        testWriter.write(savings);
+        // save to-do list to file
+        testWriter.write(todo);
         testWriter.close();
 
         // now read them back in and verify that the accounts have the expected values
