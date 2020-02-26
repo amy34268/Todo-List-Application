@@ -8,10 +8,13 @@ import java.util.List;
 public class ToDoList {
 
     private List<Task> toDoList;
+    private String name; // the to-do list name
 
+    //REQUIRES: todoName has a non-zero length
     // EFFECTS: constructs an empty to do list
-    public ToDoList() {
+    public ToDoList(String todoName) {
         toDoList = new ArrayList<>();
+        name = todoName;
     }
 
     // MODIFIES: this
