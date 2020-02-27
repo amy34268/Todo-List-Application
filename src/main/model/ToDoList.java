@@ -1,11 +1,16 @@
 package model;
 
+import persistence.Saveable;
+
+import java.io.Reader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 // Represents a to do list with a list of tasks
 
-public class ToDoList {
+public class ToDoList implements Saveable {
+    public static final String DELIMITER = ",";
 
     private List<Task> toDoList;
     //private String name; // the to-do list name
@@ -14,7 +19,17 @@ public class ToDoList {
     // EFFECTS: constructs an empty to do list
     public ToDoList() {
         toDoList = new ArrayList<>();
-      //  name = todoName;
+        //  name = todoName;
+    }
+
+    public void addToDoList(Task task) {
+        toDoList.add(task);
+    }
+
+    public void addToDoList(ToDoList oldList) {
+        for (int y = 0; y < oldList.getNumToDoList(); y++) {
+            addToDoList(oldList.getTaskPos(y));
+        }
     }
 
     // MODIFIES: this
@@ -41,5 +56,23 @@ public class ToDoList {
 
     public int getNumToDoList() {
         return toDoList.size();
+    }
+
+    @Override
+    public void save(PrintWriter printWriter) {
+        for (int i = 0; i < getToDoList().size(); i++) {
+
+            printWriter.write(toDoList.get(i).getName());
+            printWriter.write(DELIMITER);
+            printWriter.write(toDoList.get(i).getLabel());
+            printWriter.write(DELIMITER);
+            printWriter.print(toDoList.get(i).getStatus());
+            printWriter.write(DELIMITER);
+            printWriter.print(toDoList.get(i).getDeadline());
+            printWriter.write(DELIMITER);
+            printWriter.write("\n");
+        }
+
+
     }
 }

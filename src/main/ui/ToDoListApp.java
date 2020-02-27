@@ -5,6 +5,10 @@ import model.ToDoList;
 import persistence.Reader;
 import persistence.Writer;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
@@ -18,16 +22,17 @@ public class ToDoListApp {
     //EFFECTS: Run the to-do list application
     public ToDoListApp() {
         runToDoList();
+
     }
 
     //MODIFIES: this
     //EFFECTS: processes user input and initialize a to-do list
     private void runToDoList() {
-        toDoList = new ToDoList();
         boolean keepGoing = true;
-        String command = null;
+        String command = "";
         input = new Scanner(System.in);
 
+        loadToDoLists();
 
         while (keepGoing) {
             displayMenu();
@@ -46,27 +51,31 @@ public class ToDoListApp {
 
     //MODIFIES: this
     //EFFECTS: processes user command
-    private void processCommand(String command) {
+    public void processCommand(String command) {
         switch (command) {
             case "a":
-                System.out.println("add task");
+
                 doAddTask();
                 break;
             case "d":
-                System.out.println("delete task");
+
                 doDeleteTask();
                 break;
             case "date":
-                System.out.println("add date");
+
                 doAddTaskDate();
                 break;
             case "l":
-                System.out.println("add label");
+
                 doAddTaskLabel();
                 break;
             case "v":
-                System.out.println("view tasks:");
+
                 displayTasks();
+                break;
+            case "s":
+
+                saveToDoLists();
                 break;
         }
 
@@ -81,8 +90,44 @@ public class ToDoListApp {
         System.out.println("\tdate-> add date to a task");
         System.out.println("\tl-> add label to a task");
         System.out.println("\tv-> view current tasks");
+        System.out.println("\ts-> save todo list to file");
         System.out.println("\tq-> quit");
 
+    }
+
+    // MODIFIES: this
+    // EFFECTS: initializes to-do list
+    private void init() {
+        toDoList = new ToDoList();
+    }
+
+
+    // MODIFIES: this
+    // EFFECTS: loads toDoList from TODOLISTS_FILE, if that file exists;
+    // otherwise initializes toDoList with default values
+    private void loadToDoLists() {
+        try {
+            ToDoList oldL = Reader.readTask(new File(TODOLISTS_FILE));
+            this.toDoList.addToDoList(oldL);
+
+        } catch (IOException e) {
+            init();
+        }
+    }
+
+    // EFFECTS: saves state of toDoLists to TODOLISTS_FILE
+    private void saveToDoLists() {
+        try {
+            Writer writer = new Writer(new File(TODOLISTS_FILE));
+            writer.write(toDoList);
+            writer.close();
+            System.out.println("Accounts saved to file " + TODOLISTS_FILE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to save accounts to " + TODOLISTS_FILE);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            // this is due to a programming error
+        }
     }
 
 
@@ -90,12 +135,12 @@ public class ToDoListApp {
     //EFFECTS: add user entry as a task to the to do list
     private void doAddTask() {
         System.out.println("Enter your task name:");
-        String enter = input.next();
-        Task x = new Task(enter);
+
+        String name = input.next();
+
+        Task x = new Task(name,0.0,"",false);
         toDoList.addTask(x);
     }
-
-
 
     //MODIFIES: this
     //EFFECTS: remove user entry of a task from the to do list
@@ -166,10 +211,7 @@ public class ToDoListApp {
             System.out.println("Task Name:" + task.getName() + "\t,Deadline: " + task.getDeadline()
                     + "\t,Label:" + task.getLabel());
         }
-
     }
-
-
 }
       /* Iterator<Task> iter = tasks.iterator();
         while (iter.hasNext()) {

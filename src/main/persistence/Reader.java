@@ -1,6 +1,6 @@
 package persistence;
 
-import model.ToDoList;
+import model.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-// A reader that can read account data from a file
+// A reader that can read to-do list data from a file
 public class Reader {
     public static final String DELIMITER = ",";
 
-    // EFFECTS: returns a list of to-do list parsed from file; throws
+    // EFFECTS: returns a list of task parsed from file; throws
     // IOException if an exception is raised when opening / reading from file
-    public static List<ToDoList> readToDoList(File file) throws IOException {
+    public static ToDoList readTask(File file) throws IOException {
         List<String> fileContent = readFile(file);
         return parseContent(fileContent);
     }
@@ -28,12 +28,12 @@ public class Reader {
 
     // EFFECTS: returns a list of to-do list parsed from list of strings
     // where each string contains data for one to-do list
-    private static List<ToDoList> parseContent(List<String> fileContent) {
-        List<ToDoList> toDoLists = new ArrayList<>();
+    private static ToDoList parseContent(List<String> fileContent) {
+        ToDoList toDoLists = new ToDoList();
 
         for (String line : fileContent) {
             ArrayList<String> lineComponents = splitString(line);
-            toDoLists.add(parseToDoList(lineComponents));
+            toDoLists.addToDoList(parseTask(lineComponents));
         }
 
         return toDoLists;
@@ -50,8 +50,11 @@ public class Reader {
     // the id, elements 2 represents the name and element 3 represents
     // the balance of the account to be constructed
     // EFFECTS: returns an to-do list constructed from components
-    private static ToDoList parseToDoList(List<String> components) {
-        //String name = components.get(0);
-        return new ToDoList();
+    private static Task parseTask(List<String> components) {
+        String name = components.get(0);
+        double deadline = Double.parseDouble(components.get(1));
+        String label  = components.get(2);
+        Boolean status = Boolean.parseBoolean(components.get(3));;
+        return new Task(name, deadline,label,status);
     }
 }

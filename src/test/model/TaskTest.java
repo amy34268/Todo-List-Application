@@ -8,26 +8,26 @@ class TaskTest {
     private Task testTask;
     private Task testTask2;
     @BeforeEach
-    void runBefore(){ testTask = new Task("homework");}
+    void runBefore(){ testTask = new Task("homework",0.0,"",false);}
 
     @Test
     void testConstructor(){
 
         assertEquals("homework", testTask.getName());
         assertEquals( 0,testTask.getDeadline());
-        assertEquals( null,testTask.getLabel());
+        assertEquals( "",testTask.getLabel());
         assertFalse(testTask.getStatus());
     }
 
     @Test
     void testGetName(){
-        testTask = new Task("volunteer");
+        testTask = new Task("volunteer",0.0,"",false);
         assertEquals("volunteer", testTask.getName());
     }
 
     @Test
     void testGetStatus(){
-        testTask2 = new Task("volunteer");
+        testTask2 = new Task("volunteer",0.0,"",false);
         assertFalse(testTask2.getStatus());
     }
 
@@ -44,7 +44,7 @@ class TaskTest {
 
         assertEquals("black", testTask.addTaskLabel(1));
         assertEquals("white", testTask.addTaskLabel(2));
-        assertEquals(null, testTask.addTaskLabel(3));
+        assertEquals("", testTask.addTaskLabel(3));
     }
 
 

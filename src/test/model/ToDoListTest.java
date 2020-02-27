@@ -19,9 +19,9 @@ class ToDoListTest {
     @BeforeEach
     void runBefore() {
         todo = new ToDoList();
-        cpsc = new Task("cpsc");
-        math = new Task("math");
-        volunteer = new Task("volunteer");
+        cpsc = new Task("cpsc",0.0,"",false);
+        math = new Task("math",0.0,"",false);
+        volunteer = new Task("volunteer",0.0,"",false);
     }
 
     @Test
@@ -66,3 +66,4 @@ class ToDoListTest {
 
 
 }
+
