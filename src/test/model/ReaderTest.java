@@ -19,7 +19,7 @@ public class ReaderTest {
     private static final String TODOLIST_FILE = "./data/testReader.txt";
     private ToDoList toDolist;
     private Task testTask1 = new Task("test1", 0.0,"1",false);
-    private Task testTask2 = new Task("test2", 0.0,"",false);
+    private Task testTask2 = new Task("test2", 0.1,"2",false);
 
 
 
@@ -27,6 +27,9 @@ public class ReaderTest {
     public void runBefore(){
         toDolist= new ToDoList();
         toDolist.addTask(testTask1);
+        toDolist.addTask(testTask2);
+
+
 
     }
     @Test
@@ -41,6 +44,11 @@ public class ReaderTest {
             assertEquals(false, task3.getStatus());
 
 
+            Task task1 = toDoList2.getTaskPos(1);
+            assertEquals("test2", task1.getName());
+            assertEquals(0.1, task1.getDeadline());
+            assertEquals(2, task1.getLabel());
+            assertEquals(false, false);
 
         } catch (IOException e) {
             fail("IOException should not have been thrown");
@@ -56,7 +64,6 @@ public class ReaderTest {
            Reader.readTask(new File("/Users/Sammy/Documents/CPSC210/PersonalProject/MyApp/data/myFile.txt"));
 
         } catch (IOException e) {
-            fail("IOException should not have been thrown");
         }
     }
 
