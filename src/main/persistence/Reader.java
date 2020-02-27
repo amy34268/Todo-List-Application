@@ -53,7 +53,7 @@ public class Reader {
     private static Task parseTask(List<String> components) {
         String name = components.get(0);
         double deadline = Double.parseDouble(components.get(1));
-        String label  = components.get(2);
+        String label = components.get(2);
         Boolean status = Boolean.parseBoolean(components.get(3));;
         return new Task(name,deadline,label,status);
     }

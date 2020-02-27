@@ -22,6 +22,8 @@ public class ToDoListApp {
     //EFFECTS: Run the to-do list application
     public ToDoListApp() {
         runToDoList();
+        toDoList = new ToDoList();
+
 
     }
 
@@ -30,9 +32,10 @@ public class ToDoListApp {
     private void runToDoList() {
         boolean keepGoing = true;
         String command = "";
+
         input = new Scanner(System.in);
 
-        loadToDoLists();
+         loadToDoLists();
 
         while (keepGoing) {
             displayMenu();
