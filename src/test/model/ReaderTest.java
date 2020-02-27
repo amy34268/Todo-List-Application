@@ -40,15 +40,10 @@ public class ReaderTest {
             Task task3 = toDoList2.getTaskPos(0);
             assertEquals("test1",task3.getName());
             assertEquals(0.0, task3.getDeadline());
-            assertEquals(1, task3.getLabel());
-            assertEquals(false, task3.getStatus());
-
 
             Task task1 = toDoList2.getTaskPos(1);
             assertEquals("test2", task1.getName());
-            assertEquals(0.1, task1.getDeadline());
-            assertEquals(2, task1.getLabel());
-            assertEquals(false, false);
+            assertEquals(0.0, task1.getDeadline());
 
         } catch (IOException e) {
             fail("IOException should not have been thrown");
