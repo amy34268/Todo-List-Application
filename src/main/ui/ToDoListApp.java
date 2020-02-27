@@ -165,8 +165,7 @@ public class ToDoListApp {
 
     }
 
-
-
+    
     //MODIFIES: this
     //EFFECTS: add a date the user entry's task in the to do list
     private void doAddTaskDate() {
