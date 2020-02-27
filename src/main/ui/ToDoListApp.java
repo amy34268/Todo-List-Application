@@ -35,7 +35,7 @@ public class ToDoListApp {
 
         input = new Scanner(System.in);
 
-       loadToDoLists();
+        loadToDoLists();
 
         while (keepGoing) {
             displayMenu();
@@ -105,7 +105,6 @@ public class ToDoListApp {
     }
 
 
-
     // MODIFIES: this
     // EFFECTS: loads toDoList from TODOLISTS_FILE, if that file exists;
     // otherwise initializes toDoList with default values
@@ -119,7 +118,6 @@ public class ToDoListApp {
             init();
         }
     }
-
 
 
     // EFFECTS: saves state of toDoLists to TODOLISTS_FILE
