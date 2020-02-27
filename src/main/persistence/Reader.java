@@ -33,7 +33,7 @@ public class Reader {
 
         for (String line : fileContent) {
             ArrayList<String> lineComponents = splitString(line);
-            toDoLists.addToDoList(parseTask(lineComponents));
+            toDoLists.addTask(parseTask(lineComponents));
         }
 
         return toDoLists;

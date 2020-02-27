@@ -35,7 +35,7 @@ public class ToDoListApp {
 
         input = new Scanner(System.in);
 
-         loadToDoLists();
+       loadToDoLists();
 
         while (keepGoing) {
             displayMenu();
@@ -105,11 +105,13 @@ public class ToDoListApp {
     }
 
 
+
     // MODIFIES: this
     // EFFECTS: loads toDoList from TODOLISTS_FILE, if that file exists;
     // otherwise initializes toDoList with default values
     private void loadToDoLists() {
         try {
+            this.toDoList = new ToDoList();
             ToDoList oldL = Reader.readTask(new File(TODOLISTS_FILE));
             this.toDoList.addToDoList(oldL);
 
@@ -117,6 +119,8 @@ public class ToDoListApp {
             init();
         }
     }
+
+
 
     // EFFECTS: saves state of toDoLists to TODOLISTS_FILE
     private void saveToDoLists() {
@@ -141,7 +145,7 @@ public class ToDoListApp {
 
         String name = input.next();
 
-        Task x = new Task(name,0.0,"",false);
+        Task x = new Task(name, 0.0, "", false);
         toDoList.addTask(x);
     }
 
@@ -165,7 +169,7 @@ public class ToDoListApp {
 
     }
 
-    
+
     //MODIFIES: this
     //EFFECTS: add a date the user entry's task in the to do list
     private void doAddTaskDate() {

@@ -4,31 +4,31 @@ import persistence.Saveable;
 
 import java.io.Reader;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+
+import java.util.LinkedList;
 import java.util.List;
 
 // Represents a to do list with a list of tasks
 
 public class ToDoList implements Saveable {
     public static final String DELIMITER = ",";
+    private LinkedList<Task> toDoList;
 
-    private List<Task> toDoList;
     //private String name; // the to-do list name
 
     //REQUIRES: todoName has a non-zero length
     // EFFECTS: constructs an empty to do list
     public ToDoList() {
-        toDoList = new ArrayList<>();
-        //  name = todoName;
+        toDoList = new LinkedList<>();
     }
 
-    public void addToDoList(Task task) {
-        toDoList.add(task);
-    }
+//    public void addToDoList(Task task) {
+//        toDoList.add(task);
+//    }
 
     public void addToDoList(ToDoList oldList) {
         for (int y = 0; y < oldList.getNumToDoList(); y++) {
-            addToDoList(oldList.getTaskPos(y));
+            addTask(oldList.getTaskPos(y));
         }
     }
 
@@ -64,11 +64,11 @@ public class ToDoList implements Saveable {
 
             printWriter.write(toDoList.get(i).getName());
             printWriter.write(DELIMITER);
+            printWriter.print(toDoList.get(i).getDeadline());
+            printWriter.write(DELIMITER);
             printWriter.write(toDoList.get(i).getLabel());
             printWriter.write(DELIMITER);
             printWriter.print(toDoList.get(i).getStatus());
-            printWriter.write(DELIMITER);
-            printWriter.print(toDoList.get(i).getDeadline());
             printWriter.write(DELIMITER);
             printWriter.write("\n");
         }
