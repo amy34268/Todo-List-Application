@@ -20,8 +20,8 @@ import javax.swing.JOptionPane;
 public class ListExample extends JPanel implements ActionListener {
 
     private static final String TODOLISTS_FILE = "./data/todolists.txt";
-    private JList list;
-    private DefaultListModel listModel;
+    JList list;
+    DefaultListModel listModel;
 
     //ADD and DELETE buttons
     private JButton addTask;
@@ -38,14 +38,13 @@ public class ListExample extends JPanel implements ActionListener {
     //!!! For now, it will reflect the input change
     private JLabel changed;
 
-
     private static ToDoList toDoList;
 
     public ListExample() {
         super(new BorderLayout());
 
         listModel = new DefaultListModel();
-        toDoList = new ToDoList();
+       // toDoList = new ToDoList();
 
         list = new JList(listModel);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -61,7 +60,7 @@ public class ListExample extends JPanel implements ActionListener {
                     String name = toDoList.getTaskPos(list.getSelectedIndex()).getName();
                     String message = "Deadline: \n" + "Label:    "
                             + toDoList.getTaskPos(list.getSelectedIndex()).getLabel();
-                    String name2 = "Hi";
+
                     JOptionPane.showMessageDialog(sp, message,
                             name, JOptionPane.PLAIN_MESSAGE); //!!!Add Image?
 
@@ -183,6 +182,7 @@ public class ListExample extends JPanel implements ActionListener {
             toDoList = new ToDoList();
             ToDoList oldL = Reader.readTask(new File(TODOLISTS_FILE));
             toDoList.addToDoList(oldL);
+
 
         } catch (IOException e) {
             init();

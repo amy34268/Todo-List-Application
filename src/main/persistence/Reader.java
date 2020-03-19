@@ -55,6 +55,11 @@ public class Reader {
         double deadline = Double.parseDouble(components.get(1));
         String label = components.get(2);
         Boolean status = Boolean.parseBoolean(components.get(3));;
-        return new Task(name);
+
+        Task newTask = new Task(name);
+        newTask.addTaskDate(deadline);
+        newTask.addTaskLabel(label);
+        //!!!
+        return newTask;
     }
 }

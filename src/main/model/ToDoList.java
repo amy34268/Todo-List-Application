@@ -5,6 +5,8 @@ import persistence.Saveable;
 import java.io.Reader;
 import java.io.PrintWriter;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,14 +14,14 @@ import java.util.List;
 
 public class ToDoList implements Saveable  {
     public static final String DELIMITER = ",";
-    private LinkedList<Task> toDoList;
+    private ArrayList<Task> toDoList;
 
     //private String name; // the to-do list name
 
     //REQUIRES: todoName has a non-zero length
     // EFFECTS: constructs an empty to do list
     public ToDoList() {
-        toDoList = new LinkedList<>();
+        toDoList = new ArrayList<>();
     }
 
 //    public void addToDoList(Task task) {
@@ -27,8 +29,8 @@ public class ToDoList implements Saveable  {
 //    }
 
     public void addToDoList(ToDoList oldList) {
-        for (int y = 0; y < oldList.getNumToDoList(); y++) {
-            addTask(oldList.getTaskPos(y));
+        for (int x = 0; x < oldList.getNumToDoList(); x++) {
+            addTask(oldList.getTaskPos(x));
         }
     }
 
@@ -60,7 +62,7 @@ public class ToDoList implements Saveable  {
 
     @Override
     public void save(PrintWriter printWriter) {
-        for (int i = 0; i < getToDoList().size(); i++) {
+        for (int i = 0; i < getNumToDoList(); i++) {
 
             printWriter.write(toDoList.get(i).getName());
             printWriter.write(DELIMITER);

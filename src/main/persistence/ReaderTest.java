@@ -1,4 +1,4 @@
-package model;
+package persistence;
 
 
 import org.junit.jupiter.api.Test;
@@ -11,6 +11,7 @@ import persistence.Reader;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import static org.junit.jupiter.api.Assertions.fail;
@@ -22,23 +23,22 @@ public class ReaderTest {
     private Task testTask2 = new Task("test2");
 
 
-
     @BeforeEach
-    public void runBefore(){
-        toDolist= new ToDoList();
+    public void runBefore() {
+        toDolist = new ToDoList();
         toDolist.addTask(testTask1);
         toDolist.addTask(testTask2);
 
 
-
     }
+
     @Test
     void testParseTask() {
         try {
-            ToDoList toDoList2 = Reader.readTask(new File (TODOLIST_FILE));
+            ToDoList toDoList2 = Reader.readTask(new File(TODOLIST_FILE));
             toDolist.addToDoList(toDoList2);
             Task task3 = toDoList2.getTaskPos(0);
-            assertEquals("test1",task3.getName());
+            assertEquals("test1", task3.getName());
             assertEquals(0.0, task3.getDeadline());
 
             Task task1 = toDoList2.getTaskPos(1);
@@ -50,15 +50,15 @@ public class ReaderTest {
         }
 
 
-
     }
 
     @Test
     void testIOExpection() {
         try {
-           Reader.readTask(new File("/Users/Sammy/Documents/CPSC210/PersonalProject/MyApp/data/myFile.txt"));
+            Reader.readTask(new File("/Users/Sammy/Documents/CPSC210/PersonalProject/MyApp/data/myFile.txt"));
 
         } catch (IOException e) {
+
         }
     }
 

@@ -14,12 +14,8 @@ public class Task {
      */
     public Task(String name) {
         this.name = name;
-
-        this.deadline = deadline;
         this.deadline = 0;
-        this.label = label;
-        this.label = "";
-        this.status = status;
+        this.label = "none";
         this.status = false;
     }
 
@@ -36,7 +32,7 @@ public class Task {
     // EFFECTS: set label according to the given colour number
     public String addTaskLabel(String label) {
         this.label = label;
-        return label;
+        return this.label;
 
     }
 
