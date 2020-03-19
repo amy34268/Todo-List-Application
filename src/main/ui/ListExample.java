@@ -3,7 +3,13 @@ package ui;
 
 import model.Task;
 import model.ToDoList;
+import persistence.Reader;
+import persistence.Writer;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
@@ -13,6 +19,7 @@ import javax.swing.JOptionPane;
 
 public class ListExample extends JPanel implements ActionListener {
 
+    private static final String TODOLISTS_FILE = "./data/todolists.txt";
     private JList list;
     private DefaultListModel listModel;
 
@@ -20,6 +27,8 @@ public class ListExample extends JPanel implements ActionListener {
     private JButton addTask;
     private JButton deleteTask;
     private JButton labelTask;
+    private JButton save;
+    private JButton load;
 
 
     //User input for new Task's name
@@ -30,7 +39,7 @@ public class ListExample extends JPanel implements ActionListener {
     private JLabel changed;
 
 
-    private ToDoList toDoList;
+    private static ToDoList toDoList;
 
     public ListExample() {
         super(new BorderLayout());
@@ -44,22 +53,19 @@ public class ListExample extends JPanel implements ActionListener {
         list.setVisibleRowCount(10);
         JScrollPane sp = new JScrollPane(list);
 
-        list.addListSelectionListener(new ListSelectionListener() {
+        list.addKeyListener(new KeyAdapter() {
             @Override
-            public void valueChanged(ListSelectionEvent e) {
-                // list.getSelectedIndex();
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 
-                list.addKeyListener(new KeyAdapter() {
-                    @Override
-                    public void keyPressed(KeyEvent e) {
-                        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                            JOptionPane.showMessageDialog(sp,
-                                    "Eggs are not supposed to be green.",
-                                    "A plain message",
-                                    JOptionPane.PLAIN_MESSAGE);
-                        }
-                    }
-                });
+                    String name = toDoList.getTaskPos(list.getSelectedIndex()).getName();
+                    String message = "Deadline: \n" + "Label:    "
+                            + toDoList.getTaskPos(list.getSelectedIndex()).getLabel();
+                    String name2 = "Hi";
+                    JOptionPane.showMessageDialog(sp, message,
+                            name, JOptionPane.PLAIN_MESSAGE); //!!!Add Image?
+
+                }
             }
         });
 
@@ -67,48 +73,46 @@ public class ListExample extends JPanel implements ActionListener {
         addTask.setActionCommand("ADD");
         addTask.addActionListener(this);
 
-        deleteTask = new
-
-                JButton("DELETE");
+        deleteTask = new JButton("DELETE");
         deleteTask.setActionCommand("DELETE");
         deleteTask.addActionListener(this);
 
-        labelTask = new
-
-                JButton("LABEL");
+        labelTask = new JButton("LABEL");
         labelTask.setActionCommand("LABEL");
         labelTask.addActionListener(this);
 
-        changed = new
+        save = new JButton(("SAVE"));
+        save.setActionCommand(("SAVE"));
+        save.addActionListener(this);
 
-                JLabel("change");
+        load = new JButton(("LOAD"));
+        load.setActionCommand(("LOAD"));
+        load.addActionListener(this);
 
 
-        taskInput = new
+        changed = new JLabel("change");
 
-                JTextField(5);
 
-        labelInput = new
+        taskInput = new JTextField(5);
 
-                JTextField(5);
+        labelInput = new JTextField(5);
 
 
         //create a panel that uses BoxLayout;
 
         JPanel bp = new JPanel();
-        bp.setLayout(new
-
-                BoxLayout(bp,
+        bp.setLayout(new BoxLayout(bp,
                 BoxLayout.LINE_AXIS));
         bp.add(addTask);
         bp.add(taskInput);
         bp.add(deleteTask);
         bp.add(labelTask);
         bp.add(labelInput);
+        bp.add(save);
+        bp.add(load);
         bp.add(changed);
 
         add(sp, BorderLayout.CENTER);
-
         add(bp, BorderLayout.PAGE_END);
 
 
@@ -118,10 +122,12 @@ public class ListExample extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("ADD")) {
             listModel.addElement(taskInput.getText());
+
+            toDoList.addTask(new Task(taskInput.getText()));
+
             taskInput.requestFocusInWindow();
             taskInput.setText("");
 
-            toDoList.getToDoList().add(new Task(taskInput.getText()));
 
             list.setSelectedIndex(listModel.size() - 1);
             list.ensureIndexIsVisible(listModel.size() - 1);
@@ -134,7 +140,7 @@ public class ListExample extends JPanel implements ActionListener {
 
             for (Task task : toDoList.getToDoList()) {
                 if (task.getName().equals(listModel.get(index))) {
-                    toDoList.getToDoList().remove(task);
+                    toDoList.deleteTask(task);
                 }
             }
 
@@ -147,12 +153,61 @@ public class ListExample extends JPanel implements ActionListener {
         if (e.getActionCommand().equals("LABEL")) {
             int index = list.getSelectedIndex();
 
-            changed.setText(toDoList.getToDoList().get(index).addTaskLabel(labelInput.getText()));
+            changed.setText(toDoList.getTaskPos(index).addTaskLabel(labelInput.getText()));
 
             labelInput.requestFocusInWindow();
             labelInput.setText("");
         }
+        if (e.getActionCommand().equals("SAVE")) {
+            saveToDoLists();
+        }
+        if (e.getActionCommand().equals("LOAD")) {
+            loadToDoLIstToDisplayList();
+        }
 
+
+    }
+
+    public void loadToDoLIstToDisplayList() {
+        for (Task task : toDoList.getToDoList()) {
+            listModel.addElement(task.getName());
+        }
+    }
+
+
+    // MODIFIES: this
+    // EFFECTS: loads toDoList from TODOLISTS_FILE, if that file exists;
+    // otherwise initializes toDoList with default values
+    private static void loadToDoLists() {
+        try {
+            toDoList = new ToDoList();
+            ToDoList oldL = Reader.readTask(new File(TODOLISTS_FILE));
+            toDoList.addToDoList(oldL);
+
+        } catch (IOException e) {
+            init();
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: initializes to-do list
+    private static void init() {
+        toDoList = new ToDoList();
+    }
+
+
+    private void saveToDoLists() {
+        try {
+            Writer writer = new Writer(new File(TODOLISTS_FILE));
+            writer.write(toDoList);
+            writer.close();
+            System.out.println("Accounts saved to file " + TODOLISTS_FILE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to save accounts to " + TODOLISTS_FILE);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            // this is due to a programming error
+        }
     }
 
 
@@ -175,6 +230,7 @@ public class ListExample extends JPanel implements ActionListener {
 
             public void run() {
                 runForMain();
+                loadToDoLists();
             }
         });
     }
