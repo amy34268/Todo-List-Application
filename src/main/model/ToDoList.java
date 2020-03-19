@@ -10,7 +10,7 @@ import java.util.List;
 
 // Represents a to do list with a list of tasks
 
-public class ToDoList implements Saveable {
+public class ToDoList implements Saveable  {
     public static final String DELIMITER = ",";
     private LinkedList<Task> toDoList;
 

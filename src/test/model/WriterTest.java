@@ -20,8 +20,8 @@ public class WriterTest {
     private static final String TEST_FILES = "./data/testReader.txt";
     private Writer testWriter;
     private ToDoList taskList;
-    private Task testTask1 = new Task("test1", 0.0,"1",false);
-    private Task testTask2 = new Task("test2", 0.1,"2",false);
+    private Task testTask1 = new Task("test1");
+    private Task testTask2 = new Task("test2");
 
 
 

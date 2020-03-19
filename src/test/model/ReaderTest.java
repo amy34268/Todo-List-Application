@@ -18,8 +18,8 @@ import static org.junit.jupiter.api.Assertions.fail;
 public class ReaderTest {
     private static final String TODOLIST_FILE = "./data/testReader.txt";
     private ToDoList toDolist;
-    private Task testTask1 = new Task("test1", 0.0,"1",false);
-    private Task testTask2 = new Task("test2", 0.1,"2",false);
+    private Task testTask1 = new Task("test1");
+    private Task testTask2 = new Task("test2");
 
 
 

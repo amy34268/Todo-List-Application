@@ -12,7 +12,7 @@ public class Task {
      * EFFECTS: name on task is set to name, deadline is zero as in not set,
      *          label has no value, and the status is false as in incomplete;
      */
-    public Task(String name, Double deadline, String label, Boolean status) {
+    public Task(String name) {
         this.name = name;
 
         this.deadline = deadline;
@@ -34,15 +34,8 @@ public class Task {
 
     // MODIFIES: this
     // EFFECTS: set label according to the given colour number
-    public String addTaskLabel(int colour) {
-
-        if (colour == 1) {
-            label = "black";
-        } else if (colour == 2) {
-            label = "white";
-        } else {
-            label = "";
-        }
+    public String addTaskLabel(String label) {
+        this.label = label;
         return label;
 
     }

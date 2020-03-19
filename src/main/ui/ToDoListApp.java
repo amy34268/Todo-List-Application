@@ -143,7 +143,7 @@ public class ToDoListApp {
 
         String name = input.next();
 
-        Task x = new Task(name, 0.0, "", false);
+        Task x = new Task(name);
         toDoList.addTask(x);
     }
 
@@ -195,12 +195,12 @@ public class ToDoListApp {
         String enter = input.next();
 
         System.out.println("choose your colour:1 is black, 2 is white");
-        int colour = input.nextInt();
+        String label = input.next();
 
         for (Task task : toDoList.getToDoList()) {
 
             if (task.getName().equals(enter)) {
-                System.out.println("Your task now has the label:" + task.addTaskLabel(colour));
+                System.out.println("Your task now has the label:" + task.addTaskLabel(label));
                 return;
             }
 
