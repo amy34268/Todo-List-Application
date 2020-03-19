@@ -18,20 +18,24 @@ public class ListExample extends JPanel implements ActionListener {
     //ADD and DELETE buttons
     private JButton addTask;
     private JButton deleteTask;
+    private JButton labelTask;
+
 
     //User input for new Task's name
-    private JTextField input;
+    private JTextField taskInput;
+    private JTextField labelInput;
 
     //!!! For now, it will reflect the input change
     private JLabel changed;
-    private JLabel selectonChanged;
-    
+
+
+    private ToDoList toDoList;
 
     public ListExample() {
         super(new BorderLayout());
 
         listModel = new DefaultListModel();
-        listModel.addElement("Task1");
+        toDoList = new ToDoList();
 
         list = new JList(listModel);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -55,8 +59,15 @@ public class ListExample extends JPanel implements ActionListener {
         deleteTask.setActionCommand("DELETE");
         deleteTask.addActionListener(this);
 
+        labelTask = new JButton("LABEL");
+        labelTask.setActionCommand("LABEL");
+        labelTask.addActionListener(this);
+
         changed = new JLabel("change");
-        input = new JTextField(20);
+
+
+        taskInput = new JTextField(5);
+        labelInput = new JTextField(5);
 
         //create a panel that uses BoxLayout;
 
@@ -64,8 +75,10 @@ public class ListExample extends JPanel implements ActionListener {
         bp.setLayout(new BoxLayout(bp,
                 BoxLayout.LINE_AXIS));
         bp.add(addTask);
-        bp.add(input);
+        bp.add(taskInput);
         bp.add(deleteTask);
+        bp.add(labelTask);
+        bp.add(labelInput);
         bp.add(changed);
 
         add(sp, BorderLayout.CENTER);
@@ -74,29 +87,46 @@ public class ListExample extends JPanel implements ActionListener {
 
     }
 
-    //The method that's called when ADD button is clicked
+    //The method that's called when ADD or DELETE button is clicked
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("ADD")) {
-            listModel.addElement(input.getText());
-            input.requestFocusInWindow();
-            input.setText("");
+            listModel.addElement(taskInput.getText());
+            taskInput.requestFocusInWindow();
+            taskInput.setText("");
+
+            toDoList.getToDoList().add(new Task(taskInput.getText()));
 
             list.setSelectedIndex(listModel.size() - 1);
             list.ensureIndexIsVisible(listModel.size() - 1);
 
 
-            //changed.setText(input.getText());
         }
         if (e.getActionCommand().equals("DELETE")) {
             int index = list.getSelectedIndex();
             listModel.remove(list.getSelectedIndex());
 
-            input.requestFocusInWindow();
-            input.setText("");
+            for (Task task : toDoList.getToDoList()) {
+                if (task.getName().equals(listModel.get(index))) {
+                    toDoList.getToDoList().remove(task);
+                }
+            }
+
+            taskInput.requestFocusInWindow();
+            taskInput.setText("");
 
             list.setSelectedIndex(index);
             list.ensureIndexIsVisible(index);
         }
+        if (e.getActionCommand().equals("LABEL")) {
+            int index = list.getSelectedIndex();
+
+            changed.setText(toDoList.getToDoList().get(index).addTaskLabel(labelInput.getText()));
+
+
+            labelInput.requestFocusInWindow();
+            labelInput.setText("");
+        }
+
     }
 
 
