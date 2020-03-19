@@ -8,6 +8,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.*;
+import javax.swing.JOptionPane;
 
 
 public class ListExample extends JPanel implements ActionListener {
@@ -41,38 +42,63 @@ public class ListExample extends JPanel implements ActionListener {
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setSelectedIndex(0);
         list.setVisibleRowCount(10);
-        list.addListSelectionListener(
-                new ListSelectionListener() {
-                    @Override
-                    public void valueChanged(ListSelectionEvent e) {
-                        list.getSelectedIndex();
-                    }
-                });
         JScrollPane sp = new JScrollPane(list);
 
+        list.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                // list.getSelectedIndex();
+
+                list.addKeyListener(new KeyAdapter() {
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                            JOptionPane.showMessageDialog(sp,
+                                    "Eggs are not supposed to be green.",
+                                    "A plain message",
+                                    JOptionPane.PLAIN_MESSAGE);
+                        }
+                    }
+                });
+            }
+        });
 
         addTask = new JButton("ADD");
         addTask.setActionCommand("ADD");
         addTask.addActionListener(this);
 
-        deleteTask = new JButton("DELETE");
+        deleteTask = new
+
+                JButton("DELETE");
         deleteTask.setActionCommand("DELETE");
         deleteTask.addActionListener(this);
 
-        labelTask = new JButton("LABEL");
+        labelTask = new
+
+                JButton("LABEL");
         labelTask.setActionCommand("LABEL");
         labelTask.addActionListener(this);
 
-        changed = new JLabel("change");
+        changed = new
+
+                JLabel("change");
 
 
-        taskInput = new JTextField(5);
-        labelInput = new JTextField(5);
+        taskInput = new
+
+                JTextField(5);
+
+        labelInput = new
+
+                JTextField(5);
+
 
         //create a panel that uses BoxLayout;
 
         JPanel bp = new JPanel();
-        bp.setLayout(new BoxLayout(bp,
+        bp.setLayout(new
+
+                BoxLayout(bp,
                 BoxLayout.LINE_AXIS));
         bp.add(addTask);
         bp.add(taskInput);
@@ -82,6 +108,7 @@ public class ListExample extends JPanel implements ActionListener {
         bp.add(changed);
 
         add(sp, BorderLayout.CENTER);
+
         add(bp, BorderLayout.PAGE_END);
 
 
@@ -121,7 +148,6 @@ public class ListExample extends JPanel implements ActionListener {
             int index = list.getSelectedIndex();
 
             changed.setText(toDoList.getToDoList().get(index).addTaskLabel(labelInput.getText()));
-
 
             labelInput.requestFocusInWindow();
             labelInput.setText("");
