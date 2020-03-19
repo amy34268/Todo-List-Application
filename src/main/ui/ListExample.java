@@ -2,6 +2,7 @@ package ui;
 
 
 import model.Task;
+import model.ToDoList;
 
 import java.awt.event.*;
 import javax.swing.*;
@@ -24,7 +25,7 @@ public class ListExample extends JPanel implements ActionListener {
     //!!! For now, it will reflect the input change
     private JLabel changed;
     private JLabel selectonChanged;
-
+    
 
     public ListExample() {
         super(new BorderLayout());
@@ -51,7 +52,8 @@ public class ListExample extends JPanel implements ActionListener {
         addTask.addActionListener(this);
 
         deleteTask = new JButton("DELETE");
-
+        deleteTask.setActionCommand("DELETE");
+        deleteTask.addActionListener(this);
 
         changed = new JLabel("change");
         input = new JTextField(20);
@@ -75,7 +77,25 @@ public class ListExample extends JPanel implements ActionListener {
     //The method that's called when ADD button is clicked
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("ADD")) {
-            changed.setText(input.getText());
+            listModel.addElement(input.getText());
+            input.requestFocusInWindow();
+            input.setText("");
+
+            list.setSelectedIndex(listModel.size() - 1);
+            list.ensureIndexIsVisible(listModel.size() - 1);
+
+
+            //changed.setText(input.getText());
+        }
+        if (e.getActionCommand().equals("DELETE")) {
+            int index = list.getSelectedIndex();
+            listModel.remove(list.getSelectedIndex());
+
+            input.requestFocusInWindow();
+            input.setText("");
+
+            list.setSelectedIndex(index);
+            list.ensureIndexIsVisible(index);
         }
     }
 
