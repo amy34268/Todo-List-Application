@@ -58,7 +58,7 @@ public class ReaderTest {
             Reader.readTask(new File("/Users/Sammy/Documents/CPSC210/PersonalProject/MyApp/data/myFile.txt"));
 
         } catch (IOException e) {
-
+            //
         }
     }
 

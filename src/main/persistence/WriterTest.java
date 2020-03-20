@@ -41,7 +41,7 @@ public class WriterTest {
     @Test
     void testWriteAccounts() {
         // save multiple tasks to file
-        ;
+
         testWriter.write(taskList);
         testWriter.close();
 
