@@ -31,6 +31,10 @@ public class ReaderTest {
 
 
     }
+    @Test
+    void testReader(){
+        new Reader();
+    }
 
     @Test
     void testParseTask() {
