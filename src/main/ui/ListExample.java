@@ -35,26 +35,29 @@ public class ListExample extends JPanel implements ActionListener {
     private JButton completed;
 
 
-    //User input for new Task's name,label, deadline
+    //User input for new Task's name
     private JTextField taskInput;
     private JTextField labelInput;
     private JTextField dateInput;
 
-
+    //!!! For now, it will reflect the input change
     // private JLabel changed;
 
     private static ToDoList toDoList;
 
     public ListExample() {
         super(new BorderLayout());
+
         listModel = new DefaultListModel();
+        // toDoList = new ToDoList();
+
         list = new JList(listModel);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setSelectedIndex(0);
-        //list.setVisibleRowCount(10);
+        list.setVisibleRowCount(10);
         JScrollPane sp = new JScrollPane(list);
-        list.addKeyListener(new KeyAdapter() {
 
+        list.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -64,6 +67,7 @@ public class ListExample extends JPanel implements ActionListener {
                             + "\nStatus:    "
                             + toDoList.getTaskPos(list.getSelectedIndex()).getStringStatus();
                     JOptionPane.showMessageDialog(sp, message, name, JOptionPane.PLAIN_MESSAGE); //!!!Add Image?
+
                 }
             }
         });
@@ -106,7 +110,6 @@ public class ListExample extends JPanel implements ActionListener {
         bp.add(load);
 
     }
-
 
     private void addButton() {
         addTask = new JButton("ADD");
@@ -152,6 +155,7 @@ public class ListExample extends JPanel implements ActionListener {
     }
 
     private void addCommand() {
+
         listModel.addElement(taskInput.getText());
 
         toDoList.addTask(new Task(taskInput.getText()));
@@ -162,6 +166,7 @@ public class ListExample extends JPanel implements ActionListener {
 
         list.setSelectedIndex(listModel.size() - 1);
         list.ensureIndexIsVisible(listModel.size() - 1);
+
     }
 
     private void deleteCommand() {
@@ -189,40 +194,45 @@ public class ListExample extends JPanel implements ActionListener {
     private void dateCommand() {
         int index = list.getSelectedIndex();
 
-        toDoList.getTaskPos(index).addTaskDate(parseDouble(dateInput.getText()));
+        toDoList.getTaskPos(index).addTaskDate(Double.parseDouble(dateInput.getText()));
 
         dateInput.requestFocusInWindow();
         dateInput.setText("");
+
     }
 
     private void completeCommand() {
         int index = list.getSelectedIndex();
-
         toDoList.getTaskPos(index).setStatus(true);
 
     }
-
 
     //The method that's called when ADD or DELETE button is clicked
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("ADD")) {
             addCommand();
-        } else if (e.getActionCommand().equals("DELETE")) {
+        }
+        if (e.getActionCommand().equals("DELETE")) {
             deleteCommand();
-        } else if (e.getActionCommand().equals("LABEL")) {
+        }
+        if (e.getActionCommand().equals("LABEL")) {
             labelCommand();
-        } else if (e.getActionCommand().equals("DATE")) {
+        }
+        if (e.getActionCommand().equals("DATE")) {
             dateCommand();
-        } else if (e.getActionCommand().equals("COMPLETE")) {
+        }
+        if (e.getActionCommand().equals("COMPLETE")) {
             completeCommand();
-        } else if (e.getActionCommand().equals("SAVE")) {
+        }
+        if (e.getActionCommand().equals("SAVE")) {
             saveToDoLists();
-        } else if (e.getActionCommand().equals("LOAD")) {
+        }
+        if (e.getActionCommand().equals("LOAD")) {
             loadToDoLIstToDisplayList();
         }
 
-    }
 
+    }
 
     public void loadToDoLIstToDisplayList() {
         for (Task task : toDoList.getToDoList()) {
@@ -251,6 +261,7 @@ public class ListExample extends JPanel implements ActionListener {
     private static void init() {
         toDoList = new ToDoList();
     }
+
 
     private void saveToDoLists() {
         try {
