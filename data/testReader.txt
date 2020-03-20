@@ -1,2 +1,0 @@
-test1,0.0,White,false,
-test2,0.0,none,false,

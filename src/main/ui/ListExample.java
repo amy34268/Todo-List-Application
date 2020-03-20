@@ -16,6 +16,8 @@ import javax.swing.event.*;
 import java.awt.*;
 import javax.swing.JOptionPane;
 
+import static java.lang.Double.parseDouble;
+
 
 public class ListExample extends JPanel implements ActionListener {
 
@@ -27,16 +29,19 @@ public class ListExample extends JPanel implements ActionListener {
     private JButton addTask;
     private JButton deleteTask;
     private JButton labelTask;
+    private JButton dateTask;
     private JButton save;
     private JButton load;
+    private JButton completed;
 
 
     //User input for new Task's name
     private JTextField taskInput;
     private JTextField labelInput;
+    private JTextField dateInput;
 
     //!!! For now, it will reflect the input change
-    private JLabel changed;
+    // private JLabel changed;
 
     private static ToDoList toDoList;
 
@@ -44,7 +49,7 @@ public class ListExample extends JPanel implements ActionListener {
         super(new BorderLayout());
 
         listModel = new DefaultListModel();
-       // toDoList = new ToDoList();
+        // toDoList = new ToDoList();
 
         list = new JList(listModel);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -56,50 +61,41 @@ public class ListExample extends JPanel implements ActionListener {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-
                     String name = toDoList.getTaskPos(list.getSelectedIndex()).getName();
-                    String message = "Deadline: \n" + "Label:    "
-                            + toDoList.getTaskPos(list.getSelectedIndex()).getLabel();
-
-                    JOptionPane.showMessageDialog(sp, message,
-                            name, JOptionPane.PLAIN_MESSAGE); //!!!Add Image?
+                    String message = "Deadline:   " + toDoList.getTaskPos(list.getSelectedIndex()).getDeadline()
+                            + "\nLabel:    " + toDoList.getTaskPos(list.getSelectedIndex()).getLabel()
+                            + "\nStatus:    "
+                            + toDoList.getTaskPos(list.getSelectedIndex()).getStringStatus();
+                    JOptionPane.showMessageDialog(sp, message, name, JOptionPane.PLAIN_MESSAGE); //!!!Add Image?
 
                 }
             }
         });
-
-        addTask = new JButton("ADD");
-        addTask.setActionCommand("ADD");
-        addTask.addActionListener(this);
-
-        deleteTask = new JButton("DELETE");
-        deleteTask.setActionCommand("DELETE");
-        deleteTask.addActionListener(this);
-
-        labelTask = new JButton("LABEL");
-        labelTask.setActionCommand("LABEL");
-        labelTask.addActionListener(this);
-
-        save = new JButton(("SAVE"));
-        save.setActionCommand(("SAVE"));
-        save.addActionListener(this);
-
-        load = new JButton(("LOAD"));
-        load.setActionCommand(("LOAD"));
-        load.addActionListener(this);
-
-
-        changed = new JLabel("change");
-
-
-        taskInput = new JTextField(5);
-
-        labelInput = new JTextField(5);
-
-
-        //create a panel that uses BoxLayout;
+        allButtonsAndInPuts();
 
         JPanel bp = new JPanel();
+        paneSetUp(bp);
+
+        add(sp, BorderLayout.CENTER);
+        add(bp, BorderLayout.PAGE_END);
+    }
+
+    private void allButtonsAndInPuts() {
+        addButton();
+        deleteButton();
+        labelButton();
+        dateButton();
+        completedButton();
+        saveButton();
+        loadButton();
+
+        taskInput = new JTextField(5);
+        labelInput = new JTextField(5);
+        dateInput = new JTextField(5);
+    }
+
+    private void paneSetUp(JPanel bp) {
+
         bp.setLayout(new BoxLayout(bp,
                 BoxLayout.LINE_AXIS));
         bp.add(addTask);
@@ -107,55 +103,126 @@ public class ListExample extends JPanel implements ActionListener {
         bp.add(deleteTask);
         bp.add(labelTask);
         bp.add(labelInput);
+        bp.add(dateTask);
+        bp.add(dateInput);
+        bp.add(completed);
         bp.add(save);
         bp.add(load);
-        bp.add(changed);
 
-        add(sp, BorderLayout.CENTER);
-        add(bp, BorderLayout.PAGE_END);
+    }
 
+    private void addButton() {
+        addTask = new JButton("ADD");
+        addTask.setActionCommand("ADD");
+        addTask.addActionListener(this);
+    }
+
+    private void deleteButton() {
+        deleteTask = new JButton("DELETE");
+        deleteTask.setActionCommand("DELETE");
+        deleteTask.addActionListener(this);
+    }
+
+    private void labelButton() {
+        labelTask = new JButton("LABEL");
+        labelTask.setActionCommand("LABEL");
+        labelTask.addActionListener(this);
+    }
+
+    private void dateButton() {
+        dateTask = new JButton("DATE");
+        dateTask.setActionCommand("DATE");
+        dateTask.addActionListener(this);
+    }
+
+
+    private void saveButton() {
+        save = new JButton(("SAVE"));
+        save.setActionCommand(("SAVE"));
+        save.addActionListener(this);
+    }
+
+    private void loadButton() {
+        load = new JButton(("LOAD"));
+        load.setActionCommand(("LOAD"));
+        load.addActionListener(this);
+    }
+
+    private void completedButton() {
+        completed = new JButton(("COMPLETE"));
+        completed.setActionCommand(("COMPLETE"));
+        completed.addActionListener(this);
+    }
+
+    private void addCommand() {
+
+        listModel.addElement(taskInput.getText());
+
+        toDoList.addTask(new Task(taskInput.getText()));
+
+        taskInput.requestFocusInWindow();
+        taskInput.setText("");
+
+
+        list.setSelectedIndex(listModel.size() - 1);
+        list.ensureIndexIsVisible(listModel.size() - 1);
+
+    }
+
+    private void deleteCommand() {
+        int index = list.getSelectedIndex();
+        listModel.remove(list.getSelectedIndex());
+
+        for (Task task : toDoList.getToDoList()) {
+            if (task.getName().equals(listModel.get(index))) {
+                toDoList.deleteTask(task);
+            }
+        }
+        list.setSelectedIndex(index);
+        list.ensureIndexIsVisible(index);
+    }
+
+    private void labelCommand() {
+        int index = list.getSelectedIndex();
+
+        toDoList.getTaskPos(index).addTaskLabel(labelInput.getText());
+
+        labelInput.requestFocusInWindow();
+        labelInput.setText("");
+    }
+
+    private void dateCommand() {
+        int index = list.getSelectedIndex();
+
+        toDoList.getTaskPos(index).addTaskDate(Double.parseDouble(dateInput.getText()));
+
+        dateInput.requestFocusInWindow();
+        dateInput.setText("");
+
+    }
+
+    private void completeCommand() {
+        int index = list.getSelectedIndex();
+        toDoList.getTaskPos(index).setStatus(true);
 
     }
 
     //The method that's called when ADD or DELETE button is clicked
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("ADD")) {
-            listModel.addElement(taskInput.getText());
-
-            toDoList.addTask(new Task(taskInput.getText()));
-
-            taskInput.requestFocusInWindow();
-            taskInput.setText("");
-
-
-            list.setSelectedIndex(listModel.size() - 1);
-            list.ensureIndexIsVisible(listModel.size() - 1);
-
-
+            addCommand();
         }
         if (e.getActionCommand().equals("DELETE")) {
-            int index = list.getSelectedIndex();
-            listModel.remove(list.getSelectedIndex());
-
-            for (Task task : toDoList.getToDoList()) {
-                if (task.getName().equals(listModel.get(index))) {
-                    toDoList.deleteTask(task);
-                }
-            }
-
-            taskInput.requestFocusInWindow();
-            taskInput.setText("");
-
-            list.setSelectedIndex(index);
-            list.ensureIndexIsVisible(index);
+            deleteCommand();
         }
         if (e.getActionCommand().equals("LABEL")) {
-            int index = list.getSelectedIndex();
-
-            changed.setText(toDoList.getTaskPos(index).addTaskLabel(labelInput.getText()));
-
-            labelInput.requestFocusInWindow();
-            labelInput.setText("");
+            labelCommand();
+        }
+        if (e.getActionCommand().equals("DATE")) {
+            dateCommand();
+        }
+        if (e.getActionCommand().equals("COMPLETE")) {
+            completeCommand();
         }
         if (e.getActionCommand().equals("SAVE")) {
             saveToDoLists();
