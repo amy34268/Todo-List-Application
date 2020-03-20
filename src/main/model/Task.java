@@ -1,3 +1,4 @@
+
 package model;
 
 // Represents a task that has a name,deadline,label and status
@@ -36,6 +37,11 @@ public class Task {
 
     }
 
+    public Boolean setStatus(Boolean status) {
+        this.status = status;
+        return status;
+    }
+
     public String getName() {
         return name;
     }
@@ -52,8 +58,16 @@ public class Task {
         return status;
     }
 
+
+    public String getStringStatus() {
+
+        String status = "not completed";
+        if (this.status) {
+            return "completed";
+        }
+        return status;
+    }
+
 }
-
-
 
 

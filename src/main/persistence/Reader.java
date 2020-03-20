@@ -38,6 +38,7 @@ public class Reader {
 
         return toDoLists;
     }
+
     // EFFECTS: returns a list of strings obtained by splitting line on DELIMITER
     private static ArrayList<String> splitString(String line) {
         String[] splits = line.split(DELIMITER);
@@ -58,7 +59,7 @@ public class Reader {
         Task newTask = new Task(name);
         newTask.addTaskDate(deadline);
         newTask.addTaskLabel(label);
-        //!!!
+        newTask.setStatus(status);
         return newTask;
     }
 }
