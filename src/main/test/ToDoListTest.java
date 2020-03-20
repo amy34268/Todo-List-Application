@@ -1,6 +1,8 @@
-package model;
+package test;
 
 import javafx.print.Printer;
+import model.Task;
+import model.ToDoList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import persistence.Writer;

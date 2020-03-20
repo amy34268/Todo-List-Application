@@ -1,5 +1,6 @@
-package model;
+package test;
 
+import model.Task;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -52,12 +53,12 @@ class TaskTest {
     }
 
     @Test
-     void testSetStatus(){
+    void testSetStatus() {
 
         assertFalse(testTask.getStatus());
-        assertEquals("not completed",testTask.getStringStatus());
+        assertEquals("not completed", testTask.getStringStatus());
         assertTrue(testTask.setStatus(true));
-        assertEquals("completed",testTask.getStringStatus());
+        assertEquals("completed", testTask.getStringStatus());
 
     }
 }
