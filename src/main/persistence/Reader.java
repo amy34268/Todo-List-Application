@@ -59,7 +59,7 @@ public class Reader {
         Task newTask = new Task(name);
         newTask.addTaskDate(deadline);
         newTask.addTaskLabel(label);
-        //!!!
+        newTask.setStatus(status);
         return newTask;
     }
 }

@@ -36,6 +36,11 @@ public class Task {
 
     }
 
+    public Boolean setStatus(Boolean status) {
+        this.status = status;
+        return status;
+    }
+
     public String getName() {
         return name;
     }
@@ -51,6 +56,18 @@ public class Task {
     public boolean getStatus() {
         return status;
     }
+
+    public String getStringStatus() {
+
+        String status = "not completed";
+        if (this.status) {
+            return "completed";
+        }
+        return status;
+    }
+
+
+
 
 }
 
