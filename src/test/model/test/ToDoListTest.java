@@ -1,4 +1,4 @@
-package test;
+package model.test;
 
 import javafx.print.Printer;
 import model.Task;
