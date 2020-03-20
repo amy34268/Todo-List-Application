@@ -1,3 +1,4 @@
+
 package model;
 
 // Represents a task that has a name,deadline,label and status
@@ -70,7 +71,5 @@ public class Task {
 
 
 }
-
-
 
 

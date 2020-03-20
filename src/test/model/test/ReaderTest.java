@@ -1,4 +1,4 @@
-package persistence;
+package model.test;
 
 
 import org.junit.jupiter.api.Test;
@@ -31,6 +31,10 @@ public class ReaderTest {
 
 
     }
+    @Test
+    void testReader(){
+        new Reader();
+    }
 
     @Test
     void testParseTask() {
@@ -40,10 +44,14 @@ public class ReaderTest {
             Task task3 = toDoList2.getTaskPos(0);
             assertEquals("test1", task3.getName());
             assertEquals(0.0, task3.getDeadline());
+            assertEquals("White", task3.getLabel());
+            assertFalse(task3.getStatus());
 
-            Task task1 = toDoList2.getTaskPos(1);
-            assertEquals("test2", task1.getName());
-            assertEquals(0.0, task1.getDeadline());
+            Task task4 = toDoList2.getTaskPos(1);
+            assertEquals("test2", task4.getName());
+            assertEquals(0.0, task4.getDeadline());
+            assertEquals("none", task4.getLabel());
+            assertFalse(task4.getStatus());
 
         } catch (IOException e) {
             fail("IOException should not have been thrown");
@@ -58,9 +66,11 @@ public class ReaderTest {
             Reader.readTask(new File("/Users/Sammy/Documents/CPSC210/PersonalProject/MyApp/data/myFile.txt"));
 
         } catch (IOException e) {
-
+            //
         }
     }
+
+
 
 
 }

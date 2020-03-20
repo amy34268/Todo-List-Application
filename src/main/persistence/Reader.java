@@ -13,6 +13,10 @@ import java.util.List;
 public class Reader {
     public static final String DELIMITER = ",";
 
+    public Reader() {
+        //
+    }
+
     // EFFECTS: returns a list of task parsed from file; throws
     // IOException if an exception is raised when opening / reading from file
     public static ToDoList readTask(File file) throws IOException {
@@ -54,7 +58,8 @@ public class Reader {
         String name = components.get(0);
         double deadline = Double.parseDouble(components.get(1));
         String label = components.get(2);
-        Boolean status = Boolean.parseBoolean(components.get(3));;
+        Boolean status = Boolean.parseBoolean(components.get(3));
+        
 
         Task newTask = new Task(name);
         newTask.addTaskDate(deadline);

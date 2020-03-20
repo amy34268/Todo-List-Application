@@ -1,4 +1,4 @@
-package persistence;
+package model.test;
 
 import model.ToDoList;
 import model.Task;
@@ -27,7 +27,6 @@ public class WriterTest {
     private Task testTask4 = new Task("test4");
 
 
-
     @BeforeEach
     void runBefore() throws FileNotFoundException, UnsupportedEncodingException {
         testWriter = new Writer(new File(TEST_FILES));
@@ -39,22 +38,24 @@ public class WriterTest {
     }
 
     @Test
-    void testWriteAccounts() {
+    void testWrite() {
         // save multiple tasks to file
-        ;
+
         testWriter.write(taskList);
         testWriter.close();
 
         // now read them back in and verify that the Member have the expected tasks
         try {
             ToDoList tasks = Reader.readTask(new File(TEST_FILES));
-            assertEquals("test1",tasks.getTaskPos(0).getName());
-            assertEquals("White",tasks.getTaskPos(0).getLabel());
-            assertEquals("test2",tasks.getTaskPos(1).getName());
-            assertEquals(tasks.getTaskPos(0).getDeadline(),0.0);
+            assertEquals("test1", tasks.getTaskPos(0).getName());
+            assertEquals("White", tasks.getTaskPos(0).getLabel());
+            assertEquals("test2", tasks.getTaskPos(1).getName());
+            assertEquals(tasks.getTaskPos(0).getDeadline(), 0.0);
 
         } catch (IOException e) {
             fail("IOException should not have been thrown");
         }
     }
+
+
 }
