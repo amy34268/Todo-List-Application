@@ -288,8 +288,7 @@ public class ListExample extends JPanel implements ActionListener {
         frame.setVisible(true);
 
     }
-
-
+    
     public static void main(String[] args) {
 
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
