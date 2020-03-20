@@ -188,7 +188,6 @@ public class ListExample extends JPanel implements ActionListener {
             init();
         }
     }
-
     // MODIFIES: this
     // EFFECTS: initializes to-do list
     private static void init() {
