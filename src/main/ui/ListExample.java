@@ -74,7 +74,7 @@ public class ListExample extends JPanel implements ActionListener {
                 BoxLayout(bp,
                 BoxLayout.LINE_AXIS));
 
-        panelSetUP(bp);
+        panelSetUp(bp);
 
         add(sp, BorderLayout.CENTER);
 
@@ -92,8 +92,6 @@ public class ListExample extends JPanel implements ActionListener {
         }
     }
 
-  
-
 
     private void allButtonsAndInPuts() {
         addButton();
@@ -109,7 +107,7 @@ public class ListExample extends JPanel implements ActionListener {
         dateInput = new JTextField(5);
     }
 
-    private void paneSetUp(JPanel bp) {
+    private void panelSetUp(JPanel bp) {
 
         bp.setLayout(new BoxLayout(bp,
                 BoxLayout.LINE_AXIS));
@@ -171,7 +169,6 @@ public class ListExample extends JPanel implements ActionListener {
         completed.addActionListener(this);
     }
 
-  
 
     private void addCommand() {
         listModel.addElement(taskInput.getText());
@@ -223,16 +220,10 @@ public class ListExample extends JPanel implements ActionListener {
         int index = list.getSelectedIndex();
 
         toDoList.getTaskPos(index).setStatus(true);
-    private void labelCommand() {
-        int index = list.getSelectedIndex();
-
-        toDoList.getTaskPos(index).addTaskLabel(labelInput.getText());
-
-        labelInput.requestFocusInWindow();
-        labelInput.setText("");
     }
 
-    }
+
+
 
     //The method that's called when ADD or DELETE button is clicked
     public void actionPerformed(ActionEvent e) {
@@ -280,6 +271,7 @@ public class ListExample extends JPanel implements ActionListener {
             init();
         }
     }
+
     // MODIFIES: this
 // EFFECTS: initializes to-do list
     private static void init() {
