@@ -1,2 +1,0 @@
-test1,0.0,1,false,
-test2,0.1,2,false,

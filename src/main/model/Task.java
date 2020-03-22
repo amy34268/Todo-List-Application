@@ -11,7 +11,7 @@ public class Task {
 
     /* REQUIRES: name has a non-zero length;
      * EFFECTS: name on task is set to name, deadline is zero as in not set,
-     *          label has no value, and the status is false as in incomplete;
+     *          label is empty string, and the status is false as in incomplete;
      */
     public Task(String name) {
         this.name = name;

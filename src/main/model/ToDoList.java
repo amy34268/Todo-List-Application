@@ -16,21 +16,16 @@ public class ToDoList implements Saveable  {
     public static final String DELIMITER = ",";
     private ArrayList<Task> toDoList;
 
-    //private String name; // the to-do list name
 
-    //REQUIRES: todoName has a non-zero length
     // EFFECTS: constructs an empty to do list
     public ToDoList() {
         toDoList = new ArrayList<>();
     }
 
-//    public void addToDoList(Task task) {
-//        toDoList.add(task);
-//    }
-
-    public void addToDoList(ToDoList oldList) {
-        for (int x = 0; x < oldList.getNumToDoList(); x++) {
-            addTask(oldList.getTaskPos(x));
+    //EFFECTS:  add all the old to-do list tasks to the new to-do list
+    public void addToDoList(ToDoList oldToDoList) {
+        for (int x = 0; x < oldToDoList.getNumToDoList(); x++) {
+            addTask(oldToDoList.getTaskPos(x));
         }
     }
 
@@ -46,20 +41,24 @@ public class ToDoList implements Saveable  {
         toDoList.remove(task);
     }
 
-
+    // EFFECTS: returns the to-do list with tasks
     public List<Task> getToDoList() {
         return toDoList;
     }
 
+    // EFFECTS: returns the task in the to-do list at the provided index
     public Task getTaskPos(int index) {
         return toDoList.get(index);
     }
 
-
+    // EFFECTS: returns the size of the to-do list
     public int getNumToDoList() {
         return toDoList.size();
     }
 
+
+
+    // EFFECTS: write out the info of the to-do list as strings
     @Override
     public void save(PrintWriter printWriter) {
         for (int i = 0; i < getNumToDoList(); i++) {

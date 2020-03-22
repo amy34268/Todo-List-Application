@@ -12,21 +12,21 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
 import java.awt.*;
 import javax.swing.JOptionPane;
 
 import static java.lang.Double.parseDouble;
 
 
-public class ListExample extends JPanel implements ActionListener {
+public class ToDoListGUI extends JPanel implements ActionListener {
 
     private static final String TODOLISTS_FILE = "./data/todolists.txt";
     private JList list;
     private DefaultListModel listModel;
     private JScrollPane sp;
+    private static ToDoList toDoList;
 
-    //ADD and DELETE buttons
+    //All buttons layout on the GUI
     private JButton addTask;
     private JButton deleteTask;
     private JButton labelTask;
@@ -36,18 +36,15 @@ public class ListExample extends JPanel implements ActionListener {
     private JButton completed;
 
 
-    //User input for new Task's name
+    //User input for Task's information
     private JTextField taskInput;
     private JTextField labelInput;
     private JTextField dateInput;
 
+    private ImageIcon icon = new ImageIcon("to-do.png");
 
-    //!!! For now, it will reflect the input change
-    // private JLabel changed;
 
-    private static ToDoList toDoList;
-
-    public ListExample() {
+    public ToDoListGUI() {
         super(new BorderLayout());
         listModel = new DefaultListModel();
         // toDoList = new ToDoList();
@@ -61,7 +58,6 @@ public class ListExample extends JPanel implements ActionListener {
         list.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-
                 keyPressedHelper(e);
             }
         });
@@ -77,7 +73,6 @@ public class ListExample extends JPanel implements ActionListener {
         panelSetUp(bp);
 
         add(sp, BorderLayout.CENTER);
-
         add(bp, BorderLayout.PAGE_END);
 
     }
@@ -88,7 +83,11 @@ public class ListExample extends JPanel implements ActionListener {
             String message = "Deadline:   " + toDoList.getTaskPos(list.getSelectedIndex()).getDeadline()
                     + "\nLabel:    " + toDoList.getTaskPos(list.getSelectedIndex()).getLabel()
                     + "\nStatus:    " + toDoList.getTaskPos(list.getSelectedIndex()).getStringStatus();
-            JOptionPane.showMessageDialog(sp, message, name, JOptionPane.PLAIN_MESSAGE);
+            icon = new ImageIcon("./data/todo.png");
+            Image image = icon.getImage();
+            Image icon2 = image.getScaledInstance(150, 100,  java.awt.Image.SCALE_SMOOTH);
+            icon = new ImageIcon(icon2);
+            JOptionPane.showMessageDialog(sp, message, name, JOptionPane.PLAIN_MESSAGE,icon);
         }
     }
 
@@ -223,9 +222,7 @@ public class ListExample extends JPanel implements ActionListener {
     }
 
 
-
-
-    //The method that's called when ADD or DELETE button is clicked
+    //EThe method that's called when the according to button is clicked
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("ADD")) {
             addCommand();
@@ -252,6 +249,9 @@ public class ListExample extends JPanel implements ActionListener {
 
     }
 
+    // MODIFIES: listModel
+    // EFFECTS: loads to-doList tasks' names to the listModel so it is displayable
+
     public void loadToDoLIstToDisplayList() {
         for (Task task : toDoList.getToDoList()) {
             listModel.addElement(task.getName());
@@ -259,8 +259,9 @@ public class ListExample extends JPanel implements ActionListener {
     }
 
     // MODIFIES: this
-// EFFECTS: loads toDoList from TODOLISTS_FILE, if that file exists;
-// otherwise initializes toDoList with default values
+    // EFFECTS: loads toDoList from TODOLISTS_FILE, if that file exists;
+    // otherwise initializes toDoList with default values
+
     private static void loadToDoLists() {
         try {
             toDoList = new ToDoList();
@@ -268,44 +269,40 @@ public class ListExample extends JPanel implements ActionListener {
             toDoList.addToDoList(oldL);
 
         } catch (IOException e) {
-            init();
+            toDoList = new ToDoList();
         }
     }
 
-    // MODIFIES: this
-// EFFECTS: initializes to-do list
-    private static void init() {
-        toDoList = new ToDoList();
-    }
 
-
+    // EFFECTS: write to do-do list information to file
     private void saveToDoLists() {
         try {
             Writer writer = new Writer(new File(TODOLISTS_FILE));
             writer.write(toDoList);
             writer.close();
-            System.out.println("Accounts saved to file " + TODOLISTS_FILE);
+            System.out.println("To-do list information is  saved to file " + TODOLISTS_FILE);
         } catch (FileNotFoundException e) {
-            System.out.println("Unable to save accounts to " + TODOLISTS_FILE);
+            System.out.println("Unable to save to-do list information to " + TODOLISTS_FILE);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-            // this is due to a programming error
         }
     }
 
-
+    // EFFECTS: initial a frame for to-do list GUI
     private static void runForMain() {
-        JFrame frame = new JFrame("Project Name");
+        JFrame frame = new JFrame("My ToDo List");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ListExample listExample = new ListExample();
-        listExample.setOpaque(true);
-        frame.setContentPane(listExample);
+        ToDoListGUI toDoListGUI = new ToDoListGUI();
+        toDoListGUI.setOpaque(true);
+        frame.setContentPane(toDoListGUI);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
     }
 
+
+    //EFFECTS: run a to-do list gui to be able to track tasks
     public static void main(String[] args) {
 
         javax.swing.SwingUtilities.invokeLater(new Runnable() {

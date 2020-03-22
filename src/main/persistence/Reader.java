@@ -50,10 +50,10 @@ public class Reader {
     }
 
     // REQUIRES: components has size 4 where element 0 represents the
-    // id of the next account to be constructed, element 1 represents
-    // the id, elements 2 represents the name and element 3 represents
-    // the balance of the account to be constructed
-    // EFFECTS: returns an to-do list constructed from components
+    // name of the task, element 1 represents the deadline,
+    // element 3 represents the label, and element 4 represents the status
+    // of the task to be constructed
+    // EFFECTS: returns a to-do list constructed from components
     private static Task parseTask(List<String> components) {
         String name = components.get(0);
         double deadline = Double.parseDouble(components.get(1));
