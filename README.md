@@ -23,7 +23,9 @@ keep me updated of school work.I am interested to learn the logic of how such an
 - *As a user, I want to be able to save my to-do list to file*
 - *As a user, I want to be able to load my to-do list from file when the program starts*
 
-##Instructions for Grader
+##Instructions for Grader 
+- Access main through ToDoListGUI
+
 - You can generate the first required event by enter words in the filed next to add button and 
 click add. For example: enter task name as "task"
 
