@@ -3,7 +3,8 @@
 ## todo list
 
 
-The project I choose is **Todo List**, the application can help people keep track of things, either completed or to be completed.
+The project I choose is **Todo List**, the application can help people keep track of things, 
+either completed or to be completed.
 it will include features such as adding and deleting tasks.
 
 People such as business professionals or students would likely find this application helpful as they 
@@ -21,3 +22,21 @@ keep me updated of school work.I am interested to learn the logic of how such an
 - *As a user, I want to be able to view the list of tasks on my to-do list*
 - *As a user, I want to be able to save my to-do list to file*
 - *As a user, I want to be able to load my to-do list from file when the program starts*
+
+##Instructions for Grader
+- You can generate the first required event by enter words in the filed next to add button and 
+click add. For example: enter task name as "task"
+
+- You can generate the second required event by selecting the "task" you entered on the panel 
+above, click it and press ENTER on keyboard, a pop up window should show the label/deadline/status
+
+(label can be entered by typing words such as "cpsc 210 " and click the "label" button 
+ date may be entered by typing in the format of "3.22", and click the "date" button 
+,status of the task can be set as complete through clicking the "complete" button)
+
+- You can locate my visual component by doing the step above, selecting a task and press the enter key
+should show a pop up window with a visual on the left 
+
+- You can save the state of my application by clicking the save button and exit the application 
+
+- You can reload the state of my application by rerunning the application and to click load button to load task
