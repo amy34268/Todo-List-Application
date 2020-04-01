@@ -10,10 +10,11 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import static persistence.Reader.DELIMITER;
+
 // Represents a to do list with a list of tasks
 
 public class ToDoList implements Saveable  {
-    public static final String DELIMITER = ",";
     private ArrayList<Task> toDoList;
 
 

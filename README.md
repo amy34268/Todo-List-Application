@@ -53,10 +53,16 @@ ToDoListGUI is a valid date(Month: 1-12, Date: 1-31 (Different for each month)) 
  the exception, a message box will
 display "the date you entered is incorrect".
 
-#Phase 4: Task 
+#Phase 4: Task 3
 
 - Writer class and ToDoList class should not have separated DELIMITER, they should be the same value at all time
 
-- functionality for the UI elements can be extracted from GUI and make them a new Class.
+   Improvement: import static persistence.Reader.DELIMITER in toDoList class, so the change in the constant in Writer
+   will also reflect on ToDoList
+   
+-  When setting UI elements suc has JButtons ("ADD") and setActionCommand("ADD"), the String "ADD" 
+should be the same value at all time
+
+- functionality for the UI elements can be extracted from GUI and make them into a new Class.
  
-- Save and Load Functions can be separated from GUI and make them a new Class.
+- Save and Load Functions can be separated from GUI and make them into a new Class.
