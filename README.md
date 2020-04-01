@@ -64,8 +64,8 @@ display "the date you entered is incorrect".
 should be the same value at all time
 
     Improvement:  created private static final String for all JButtons,
-    so the change on the constant in the element's name in the UI class will also reflect on its command listener
+    so the change on the constant in the element's name in the UI class will also reflect on its actionPerformed
 
-- functionality for the UI elements can be extracted from GUI and make them into a new Class.
+-  GUI Main and JFrame setup are in the same class(inner class) as  UI elements in ToDOListGUI, which can be extracted
  
 - Save and Load Functions can be separated from GUI and make them into a new Class.
