@@ -25,6 +25,14 @@ import static java.lang.Double.parseDouble;
 public class ToDoListGUI extends JPanel implements ActionListener {
 
     private static final String TODOLISTS_FILE = "./data/todolists.txt";
+    private static final String ADD = "ADD";
+    private static final String DELETE = "DELETE";
+    private static final String LABEL = "LABEL";
+    private static final String DATE = "DATE";
+    private static final String SAVE = "SAVE";
+    private static final String LOAD = "LOAD";
+    private static final String COMPLETE = "COMPLETE";
+
 
 
     private JList list;
@@ -134,50 +142,50 @@ public class ToDoListGUI extends JPanel implements ActionListener {
     //EFFECTS: initialize add button
     private void addButton() {
 
-        addTask = new JButton("ADD");
-        addTask.setActionCommand("ADD");
+        addTask = new JButton(ADD);
+        addTask.setActionCommand(ADD);
         addTask.addActionListener(this);
     }
 
     //EFFECTS: initialize delete button
     private void deleteButton() {
-        deleteTask = new JButton("DELETE");
-        deleteTask.setActionCommand("DELETE");
+        deleteTask = new JButton(DELETE);
+        deleteTask.setActionCommand(DELETE);
         deleteTask.addActionListener(this);
     }
 
     //EFFECTS: initialize label button
     private void labelButton() {
-        labelTask = new JButton("LABEL");
-        labelTask.setActionCommand("LABEL");
+        labelTask = new JButton(LABEL);
+        labelTask.setActionCommand(LABEL);
         labelTask.addActionListener(this);
     }
 
     //EFFECTS: initialize date button
     private void dateButton() {
-        dateTask = new JButton("DATE");
-        dateTask.setActionCommand("DATE");
+        dateTask = new JButton(DATE);
+        dateTask.setActionCommand(DATE);
         dateTask.addActionListener(this);
     }
 
     //EFFECTS: initialize save button
     private void saveButton() {
-        save = new JButton(("SAVE"));
-        save.setActionCommand(("SAVE"));
+        save = new JButton((SAVE));
+        save.setActionCommand((SAVE));
         save.addActionListener(this);
     }
 
     //EFFECTS: initialize load button
     private void loadButton() {
-        load = new JButton(("LOAD"));
-        load.setActionCommand(("LOAD"));
+        load = new JButton((LOAD));
+        load.setActionCommand((LOAD));
         load.addActionListener(this);
     }
 
     //EFFECTS: initialize complete button
     private void completedButton() {
-        completed = new JButton(("COMPLETE"));
-        completed.setActionCommand(("COMPLETE"));
+        completed = new JButton((COMPLETE));
+        completed.setActionCommand((COMPLETE));
         completed.addActionListener(this);
     }
 
@@ -248,25 +256,25 @@ public class ToDoListGUI extends JPanel implements ActionListener {
 
     //EFFECT: determine which method that's called when the according  button is clicked
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("ADD")) {
+        if (e.getActionCommand().equals(ADD)) {
             addCommand();
         }
-        if (e.getActionCommand().equals("DELETE")) {
+        if (e.getActionCommand().equals(DELETE)) {
             deleteCommand();
         }
-        if (e.getActionCommand().equals("LABEL")) {
+        if (e.getActionCommand().equals(LABEL)) {
             labelCommand();
         }
-        if (e.getActionCommand().equals("DATE")) {
+        if (e.getActionCommand().equals(DATE)) {
             dateCommandWithException();
         }
-        if (e.getActionCommand().equals("COMPLETE")) {
+        if (e.getActionCommand().equals(COMPLETE)) {
             completeCommand();
         }
-        if (e.getActionCommand().equals("SAVE")) {
+        if (e.getActionCommand().equals(SAVE)) {
             saveToDoLists();
         }
-        if (e.getActionCommand().equals("LOAD")) {
+        if (e.getActionCommand().equals(LOAD)) {
             loadToDoLIstToDisplayList();
         }
 

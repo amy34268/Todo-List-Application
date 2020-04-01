@@ -63,6 +63,9 @@ display "the date you entered is incorrect".
 -  When setting UI elements suc has JButtons ("ADD") and setActionCommand("ADD"), the String "ADD" 
 should be the same value at all time
 
+    Improvement:  created private static final String for all JButtons,
+    so the change on the constant in the element's name in the UI class will also reflect on its command listener
+
 - functionality for the UI elements can be extracted from GUI and make them into a new Class.
  
 - Save and Load Functions can be separated from GUI and make them into a new Class.
