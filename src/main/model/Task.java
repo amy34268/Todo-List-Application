@@ -4,7 +4,6 @@ package model;
 // Represents a task that has a name,deadline,label and status
 
 import model.exceptions.InputInvalidException;
-import ui.ToDoListGUI;
 
 import java.math.BigDecimal;
 
@@ -73,6 +72,8 @@ public class Task {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: set status according to the given boolean value
     public Boolean setStatus(Boolean status) {
         this.status = status;
         return status;

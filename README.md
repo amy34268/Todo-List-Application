@@ -42,3 +42,13 @@ should show a pop up window with a visual on the left
 - You can save the state of my application by clicking the save button and exit the application 
 
 - You can reload the state of my application by rerunning the application and to click load button to load task
+
+
+#Phase 4: Task 2 
+I have chosen the first option: test and design a class that is robust.
+
+In **Task** Class, **addTaskDate** method will identify if the dateInput in the format **month.date (##.##)** in 
+ToDoListGUI is a valid date(Month: 1-12, Date: 1-31 (Different for each month)) .If not, it will throw
+ **InputInvalidException**,and **ToDoListGUI's dateCommandWithException** method will catch it. When it catches
+ the exception, a message box will
+display "the date you entered is incorrect".
