@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
 
 import static java.lang.Double.parseDouble;
 
-
+// THe GUI set up for a TO-DO List Application
 public class ToDoListGUI extends JPanel implements ActionListener {
 
     private static final String TODOLISTS_FILE = "./data/todolists.txt";
@@ -33,7 +33,6 @@ public class ToDoListGUI extends JPanel implements ActionListener {
     private static final String SAVE = "SAVE";
     private static final String LOAD = "LOAD";
     private static final String COMPLETE = "COMPLETE";
-
 
 
     private JList list;

@@ -55,21 +55,24 @@ display "the date you entered is incorrect".
 
 #Phase 4: Task 3
 
-- Writer class and ToDoList class should not have separated DELIMITER, they should be the same value at all time
+- Coupling Issue:  Writer class and ToDoList class should not have separated DELIMITER, they should be the same 
+value at all time
 
-   Improvement: import static persistence.Reader.DELIMITER in toDoList class, so the change in the constant in Writer
-   will also reflect on ToDoList
+  Improvement:     import static persistence.Reader.DELIMITER in toDoList class, so the change in the constant in 
+                   Writer will also reflect on ToDoList
    
--  When setting UI elements suc has JButtons ("ADD") and setActionCommand("ADD"), the String "ADD" 
-should be the same value at all time
+- Coupling Issue:  When setting UI elements such as JButtons ("ADD") and setActionCommand("ADD"), the String "ADD" 
+                   should be the same value at all time
 
-    Improvement:  created private static final String for all JButtons,
-    so the change on the constant in the element's name in the UI class will also reflect on its actionPerformed
+  Improvement:     Created private static final String for all JButtons,
+                   so the change on the constant in the element's name in the UI class 
+                   will also reflect on its actionPerformed
 
--  GUI Main and JFrame setup are in the same class(as methods) as  UI elements in ToDOListGUI, which can be extracted
+- Cohesion Issue:  GUI Main and JFrame setup are in the same class(as methods) as  UI elements in ToDOListGUI, 
+                   which can be extracted
     
-    Improvement: main method and runForMain method (JFrame setup)  are extracted from ToDOListGUI Class (the rest of UI
-    set up) and moved to the Main Class (which used to be for the old Console UI)
+  Improvement:     main method and runForMain method (JFrame setup)  are extracted from ToDOListGUI Class (the rest 
+                   of UI set up) and moved to the Main Class (which used to be for the old Console UI) 
 
- 
-- Save and Load Functions can be separated from GUI and make them into a new Class.
+
+- Cohesion Issue:  Save and Load Functions can be separated from GUI and make them into a new Class.

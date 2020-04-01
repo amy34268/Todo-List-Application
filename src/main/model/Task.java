@@ -25,7 +25,7 @@ public class Task {
     }
 
 
-
+    // REQUIRES: double value entered is in the format ##.##
     // MODIFIES: this
     // EFFECTS: set deadline of task to the given date, throws InputInvalidException
     // if input is invalid
