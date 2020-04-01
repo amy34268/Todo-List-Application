@@ -3,6 +3,7 @@ package ui;
 
 import model.Task;
 import model.ToDoList;
+
 import persistence.Reader;
 import persistence.Writer;
 
@@ -14,6 +15,8 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.JOptionPane;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 import static java.lang.Double.parseDouble;
 
@@ -21,6 +24,7 @@ import static java.lang.Double.parseDouble;
 public class ToDoListGUI extends JPanel implements ActionListener {
 
     private static final String TODOLISTS_FILE = "./data/todolists.txt";
+    private static DecimalFormat df2 = new DecimalFormat("#.##");
     private JList list;
     private DefaultListModel listModel;
     private JScrollPane sp;
@@ -221,12 +225,53 @@ public class ToDoListGUI extends JPanel implements ActionListener {
 
     // MODIFIES: todolist
     // EFFECTS: set the date of the tas  in the todolist to the according index
-    private void dateCommand() {
+    private void dateCommand() throws InputInvalidException {
         int index = list.getSelectedIndex();
 
-        toDoList.getTaskPos(index).addTaskDate(parseDouble(dateInput.getText()));
-        dateInput.requestFocusInWindow();
-        dateInput.setText("");
+        double dateNum = parseDouble(dateInput.getText());
+        BigDecimal bigDecimal = new BigDecimal(String.valueOf(dateNum));
+        int month = bigDecimal.intValue();
+
+        BigDecimal bigDecimal1 = bigDecimal.subtract(new BigDecimal(month));
+        BigDecimal dayBigDecimal = bigDecimal1.multiply(new BigDecimal(100));
+        int day = dayBigDecimal.intValue();
+
+        boolean validInput = checkValidInput(month, day);
+
+        if (validInput) {
+            toDoList.getTaskPos(index).addTaskDate(parseDouble(dateInput.getText()));
+            dateInput.requestFocusInWindow();
+            dateInput.setText("");
+        } else {
+            dateInput.setText("");
+            throw new InputInvalidException();
+        }
+
+    }
+
+    //EFFECTS: return true if date input is valid, otherwise return false
+    private boolean checkValidInput(int month, int day) {
+
+        if (month > 12 || month < 1 || day > 31 || day < 1) {
+            System.out.println(month);
+            System.out.println(day);
+            return false;
+        } else if (month == 4 || month == 6 || month == 9 || month == 11) {
+            if (day > 30) {
+                System.out.println(month);
+                System.out.println(day);
+                return false;
+            }
+        } else if (month == 2) {
+            if (day > 29) {
+                System.out.println(month);
+                System.out.println(day);
+                return false;
+            }
+        }
+        System.out.println(month);
+        System.out.println(day);
+        return true;
     }
 
 
@@ -251,7 +296,7 @@ public class ToDoListGUI extends JPanel implements ActionListener {
             labelCommand();
         }
         if (e.getActionCommand().equals("DATE")) {
-            dateCommand();
+            dateCommandWithException();
         }
         if (e.getActionCommand().equals("COMPLETE")) {
             completeCommand();
@@ -263,8 +308,20 @@ public class ToDoListGUI extends JPanel implements ActionListener {
             loadToDoLIstToDisplayList();
         }
 
-
     }
+
+    //EFFECTS: helper function when date button is clicked, if input is invalid, display a warning window;
+    //          otherwise do dateCommand()
+    public void dateCommandWithException() {
+        try {
+            dateCommand();
+
+        } catch (InputInvalidException ex) {
+            JOptionPane.showMessageDialog(sp, "The date you entered is incorrect", "InvalidInput",
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
 
     // MODIFIES: listModel
     // EFFECTS: loads to-doList tasks' names to the listModel so it is displayable
@@ -333,4 +390,7 @@ public class ToDoListGUI extends JPanel implements ActionListener {
         });
     }
 
+    private class InputInvalidException extends Exception {
+
+    }
 }

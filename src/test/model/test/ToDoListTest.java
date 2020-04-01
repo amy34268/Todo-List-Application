@@ -22,7 +22,7 @@ class ToDoListTest {
     Task cpsc;
     Task math;
     Task volunteer;
-    PrintWriter testwriter;
+
 
 
     @BeforeEach
