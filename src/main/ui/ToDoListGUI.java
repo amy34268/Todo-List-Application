@@ -308,7 +308,7 @@ public class ToDoListGUI extends JPanel implements ActionListener {
     // EFFECTS: loads toDoList from TODOLISTS_FILE, if that file exists;
     // otherwise initializes toDoList with default values
 
-    private static void loadToDoLists() {
+    public static void loadToDoLists() {
         try {
             toDoList = new ToDoList();
             ToDoList oldL = Reader.readTask(new File(TODOLISTS_FILE));
@@ -334,32 +334,4 @@ public class ToDoListGUI extends JPanel implements ActionListener {
             e.printStackTrace();
         }
     }
-
-    // EFFECTS: initial a frame for to-do list GUI
-    private static void runForMain() {
-        JFrame frame = new JFrame("My ToDo List");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ToDoListGUI toDoListGUI = new ToDoListGUI();
-        toDoListGUI.setOpaque(true);
-        frame.setContentPane(toDoListGUI);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-
-    }
-
-
-    //EFFECTS: run a to-do list gui to be able to track tasks
-    public static void main(String[] args) {
-
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-
-            public void run() {
-                runForMain();
-                loadToDoLists();
-            }
-        });
-    }
-
-
 }

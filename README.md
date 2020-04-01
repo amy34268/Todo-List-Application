@@ -66,6 +66,10 @@ should be the same value at all time
     Improvement:  created private static final String for all JButtons,
     so the change on the constant in the element's name in the UI class will also reflect on its actionPerformed
 
--  GUI Main and JFrame setup are in the same class(inner class) as  UI elements in ToDOListGUI, which can be extracted
+-  GUI Main and JFrame setup are in the same class(as methods) as  UI elements in ToDOListGUI, which can be extracted
+    
+    Improvement: main method and runForMain method (JFrame setup)  are extracted from ToDOListGUI Class (the rest of UI
+    set up) and moved to the Main Class (which used to be for the old Console UI)
+
  
 - Save and Load Functions can be separated from GUI and make them into a new Class.
