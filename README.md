@@ -52,3 +52,11 @@ ToDoListGUI is a valid date(Month: 1-12, Date: 1-31 (Different for each month)) 
  **InputInvalidException**,and **ToDoListGUI's dateCommandWithException** method will catch it. When it catches
  the exception, a message box will
 display "the date you entered is incorrect".
+
+#Phase 4: Task 
+
+- Writer class and ToDoList class should not have separated DELIMITER, they should be the same value at all time
+
+- functionality for the UI elements can be extracted from GUI and make them a new Class.
+ 
+- Save and Load Functions can be separated from GUI and make them a new Class.
