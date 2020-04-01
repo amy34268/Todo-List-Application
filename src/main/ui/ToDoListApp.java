@@ -2,6 +2,7 @@ package ui;
 
 import model.Task;
 import model.ToDoList;
+import model.exceptions.InputInvalidException;
 import persistence.Reader;
 import persistence.Writer;
 
@@ -20,7 +21,7 @@ public class ToDoListApp {
     private Scanner input;
 
     //EFFECTS: Run the to-do list application
-    public ToDoListApp() {
+    public ToDoListApp() throws InputInvalidException {
         runToDoList();
         toDoList = new ToDoList();
 
@@ -29,9 +30,9 @@ public class ToDoListApp {
 
     //MODIFIES: this
     //EFFECTS: processes user input and initialize a to-do list
-    private void runToDoList() {
+    private void runToDoList() throws InputInvalidException {
         boolean keepGoing = true;
-        String command = "";
+        String command;
 
         input = new Scanner(System.in);
 
@@ -54,7 +55,7 @@ public class ToDoListApp {
 
     //MODIFIES: this
     //EFFECTS: processes user command
-    public void processCommand(String command) {
+    public void processCommand(String command) throws InputInvalidException {
         switch (command) {
             case "a":
 
@@ -114,7 +115,7 @@ public class ToDoListApp {
             ToDoList oldL = Reader.readTask(new File(TODOLISTS_FILE));
             this.toDoList.addToDoList(oldL);
 
-        } catch (IOException e) {
+        } catch (IOException | InputInvalidException e) {
             init();
         }
     }
@@ -155,8 +156,7 @@ public class ToDoListApp {
         String enter = input.next();
         List<Task> tasks = toDoList.getToDoList();
 
-        for (int i = 0; i < tasks.size(); i++) {
-            Task task = tasks.get(i);
+        for (Task task : tasks) {
             if (task.getName().equals(enter)) {
                 toDoList.deleteTask(task);
                 System.out.println("your task is now deleted");
@@ -170,7 +170,7 @@ public class ToDoListApp {
 
     //MODIFIES: this
     //EFFECTS: add a date the user entry's task in the to do list
-    private void doAddTaskDate() {
+    private void doAddTaskDate() throws InputInvalidException {
         System.out.println("choose your task:");
         displayTasks();
         String enter = input.next();

@@ -1,6 +1,7 @@
 package model.test;
 
 
+import model.exceptions.InputInvalidException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import model.Task;
@@ -42,17 +43,17 @@ public class ReaderTest {
             testList.addToDoList(toDoList2);
             Task task3 = toDoList2.getTaskPos(0);
             assertEquals("cpsc", task3.getName());
-            assertEquals(0.0, task3.getDeadline());
+            assertEquals(1.01, task3.getDeadline());
             assertEquals("White", task3.getLabel());
             assertFalse(task3.getStatus());
 
             Task task4 = toDoList2.getTaskPos(1);
             assertEquals("math", task4.getName());
-            assertEquals(0.0, task4.getDeadline());
+            assertEquals(1.01, task4.getDeadline());
             assertEquals("none", task4.getLabel());
             assertTrue(task4.getStatus());
 
-        } catch (IOException e) {
+        } catch (IOException | InputInvalidException e) {
             fail("IOException should not have been thrown");
         }
 
@@ -64,7 +65,7 @@ public class ReaderTest {
         try {
             Reader.readTask(new File("/Users/Sammy/Documents/CPSC210/PersonalProject/MyApp/data/myFile.txt"));
 
-        } catch (IOException e) {
+        } catch (IOException | InputInvalidException e) {
             //
         }
     }

@@ -1,6 +1,7 @@
 package persistence;
 
 import model.*;
+import model.exceptions.InputInvalidException;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,7 +20,7 @@ public class Reader {
 
     // EFFECTS: returns a list of task parsed from file; throws
     // IOException if an exception is raised when opening / reading from file
-    public static ToDoList readTask(File file) throws IOException {
+    public static ToDoList readTask(File file) throws IOException, InputInvalidException {
         List<String> fileContent = readFile(file);
         return parseContent(fileContent);
     }
@@ -32,7 +33,7 @@ public class Reader {
 
     // EFFECTS: returns a list of to-do list parsed from list of strings
     // where each string contains data for one to-do list
-    private static ToDoList parseContent(List<String> fileContent) {
+    private static ToDoList parseContent(List<String> fileContent) throws InputInvalidException {
         ToDoList toDoLists = new ToDoList();
 
         for (String line : fileContent) {
@@ -54,7 +55,7 @@ public class Reader {
     // element 3 represents the label, and element 4 represents the status
     // of the task to be constructed
     // EFFECTS: returns a to-do list constructed from components
-    private static Task parseTask(List<String> components) {
+    private static Task parseTask(List<String> components) throws InputInvalidException {
         String name = components.get(0);
         double deadline = Double.parseDouble(components.get(1));
         String label = components.get(2);

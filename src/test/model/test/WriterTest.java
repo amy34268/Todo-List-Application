@@ -2,6 +2,7 @@ package model.test;
 
 import model.ToDoList;
 import model.Task;
+import model.exceptions.InputInvalidException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import persistence.Reader;
@@ -48,11 +49,11 @@ public class WriterTest {
             ToDoList tasks = Reader.readTask(new File(TEST_FILES));
             assertEquals("cpsc", tasks.getTaskPos(0).getName());
             assertEquals("White", tasks.getTaskPos(0).getLabel());
-            assertEquals( 0.0,tasks.getTaskPos(0).getDeadline());
+            assertEquals( 1.01,tasks.getTaskPos(0).getDeadline());
             assertEquals("math", tasks.getTaskPos(1).getName());
             assertEquals("completed", tasks.getTaskPos(1).getStringStatus());
 
-        } catch (IOException e) {
+        } catch (IOException | InputInvalidException e) {
             fail("IOException should not have been thrown");
         }
     }

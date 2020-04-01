@@ -1,6 +1,7 @@
 package model.test;
 
 import model.Task;
+import model.exceptions.InputInvalidException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +20,7 @@ class TaskTest {
     void testConstructor() {
 
         assertEquals("homework", testTask.getName());
-        assertEquals(0, testTask.getDeadline());
+        assertEquals(1.01, testTask.getDeadline());
         assertEquals("none", testTask.getLabel());
         assertFalse(testTask.getStatus());
     }
@@ -38,10 +39,66 @@ class TaskTest {
 
 
     @Test
-    void testAddTaskDate() {
+    void testAddTaskDateExceptionNotExpected() {
 
-        assertEquals(2.13, testTask.addTaskDate(2.13));
+        try{
+        testTask.addTaskDate(2.13);
+
+        }
+        catch(InputInvalidException e){
+            fail("Exception should not thrown");
+        }
     }
+
+    @Test
+    void testAddTaskDateExceptionExpected() {
+
+        try{
+            testTask.addTaskDate(2.30);
+            fail("Exception should have been thrown");
+        }
+        catch(InputInvalidException e){
+            //
+        }
+    }
+
+    @Test
+    void testCheckValidInput(){
+        int month;
+        int day;
+        boolean value;
+        month = 3;
+        day = 13;
+        value = testTask.checkValidInput(month,day);
+        assertTrue(value);
+        month = 13;
+        day = 13;
+        value = testTask.checkValidInput(month,day);
+        assertFalse(value);
+        month = 5;
+        day = 32;
+        value = testTask.checkValidInput(month,day);
+        assertFalse(value);
+        month = 4;
+        day = 30;
+        value = testTask.checkValidInput(month,day);
+        assertTrue(value);
+        month = 4;
+        day = 31;
+        value = testTask.checkValidInput(month,day);
+        assertFalse(value);
+
+        month = 2;
+        day = 29;
+        value = testTask.checkValidInput(month,day);
+        assertTrue(value);
+        month = 2;
+        day = 30;
+        value = testTask.checkValidInput(month,day);
+        assertFalse(value);
+
+    }
+
 
     @Test
     void testAddTaskLabel() {

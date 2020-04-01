@@ -3,6 +3,11 @@ package model;
 
 // Represents a task that has a name,deadline,label and status
 
+import model.exceptions.InputInvalidException;
+import ui.ToDoListGUI;
+
+import java.math.BigDecimal;
+
 public class Task {
     private String name; // name of task
     private double deadline; // the task deadline
@@ -15,18 +20,49 @@ public class Task {
      */
     public Task(String name) {
         this.name = name;
-        this.deadline = 0;
+        this.deadline = 1.01;
         this.label = "none";
         this.status = false;
     }
 
 
-    // REQUIRES: date is a positive number
+
     // MODIFIES: this
-    // EFFECTS: set deadline of task to the given date
-    public Double addTaskDate(double date) {
-        deadline = date;
-        return deadline;
+    // EFFECTS: set deadline of task to the given date, throws InputInvalidException
+    // if input is invalid
+    public Double addTaskDate(double dateNum) throws InputInvalidException {
+        BigDecimal bigDecimal = new BigDecimal(String.valueOf(dateNum));
+        int month = bigDecimal.intValue();
+
+        BigDecimal bigDecimal1 = bigDecimal.subtract(new BigDecimal(month));
+        BigDecimal dayBigDecimal = bigDecimal1.multiply(new BigDecimal(100));
+        int day = dayBigDecimal.intValue();
+        boolean validInput = checkValidInput(month, day);
+
+        if (validInput) {
+
+            deadline = dateNum;
+            return deadline;
+
+        } else {
+            throw new InputInvalidException();
+        }
+
+
+    }
+
+    //EFFECTS: return true if date input is valid, otherwise return false
+    public boolean checkValidInput(int month, int day) {
+
+        if (month > 12 || month < 1 || day > 31 || day < 1) {
+            return false;
+        } else if (month == 4 || month == 6 || month == 9 || month == 11) {
+            return day <= 30;
+        } else if (month == 2) {
+            return day <= 29;
+        }
+
+        return true;
     }
 
     // MODIFIES: this
@@ -66,8 +102,6 @@ public class Task {
         }
         return status;
     }
-
-
 
 
 }
