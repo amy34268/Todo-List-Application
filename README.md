@@ -23,7 +23,8 @@ keep me updated of school work.I am interested to learn the logic of how such an
 - *As a user, I want to be able to save my to-do list to file*
 - *As a user, I want to be able to load my to-do list from file when the program starts*
 
-##Instructions for Grader 
+## Instructions for Grader 
+
 - Access main through ToDoListGUI
 
 - You can generate the first required event by enter words in the filed next to add button and 
@@ -44,7 +45,8 @@ should show a pop up window with a visual on the left
 - You can reload the state of my application by rerunning the application and to click load button to load task
 
 
-##Phase 4: Task 2 
+## Phase 4: Task 2 
+
 I have chosen the first option: test and design a class that is robust.
 
 In **Task** Class, **addTaskDate** method will identify if the dateInput in the format **month.date (##.##)** in 
@@ -53,18 +55,18 @@ ToDoListGUI is a valid date(Month: 1-12, Date: 1-31 (Different for each month)) 
  the exception, a message box will
 display "the date you entered is incorrect".
 
-##Phase 4: Task 3
+## Phase 4: Task 3
 
 - Coupling Issue:  Writer class and ToDoList class should not have separated DELIMITER, they should be the same 
 value at all time
 
-  Improvement:     import static persistence.Reader.DELIMITER in toDoList class, so the change in the constant in 
-                   Writer will also reflect on ToDoList
+  Improvement:     imported **static persistence.Reader.DELIMITER** into toDoList class, so the change in the constant 
+                   into Writer will also reflect on ToDoList
    
 - Coupling Issue:  When setting UI elements such as JButtons ("ADD") and setActionCommand("ADD"), the String "ADD" 
                    should be the same value at all time
 
-  Improvement:     Created private static final String for all JButtons,
+  Improvement:     Created **static final String** for all JButtons,
                    so the change on the constant in the element's name in the UI class 
                    will also reflect on its actionPerformed
 
@@ -72,7 +74,8 @@ value at all time
                    which can be extracted
     
   Improvement:     main method and runForMain method (JFrame setup)  are extracted from ToDOListGUI Class (the rest 
-                   of UI set up) and moved to the Main Class (which used to be for the old Console UI) 
+                   of UI set up) and moved to the Main Class (which used to be for the old Console UI that is now
+                   removed) 
 
 
 - Cohesion Issue:  Save and Load Functions can be separated from GUI and make them into a new Class.
